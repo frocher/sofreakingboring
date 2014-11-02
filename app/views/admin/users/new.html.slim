@@ -1,0 +1,31 @@
+- @title="Create user"
+= form_for([:admin, @user]) do |f|
+  .col-sm-8.col-md-6
+    .box.box-solid
+      .box-body
+        - if @user.errors.any?
+          .alert.alert-danger.alert-dismissable
+            button aria-hidden="true" data-dismiss="alert" class="close" type="button" ×
+            ul
+              - @user.errors.full_messages.each do |msg|
+                li = msg
+        h4.bottom-15 General Information
+        .form-group
+          = f.label :name
+          = f.text_field :name, :autofocus => true, 'placeholder' => "Enter user name", class: "form-control"
+        .form-group
+          = f.label :password, "New password"
+          = f.password_field :password, :autofocus => true, 'placeholder' => "Enter user password", class: "form-control"
+        .form-group
+          = f.label :email
+          = f.email_field :email, 'placeholder' => "Enter user email", class: "form-control"
+        .form-group
+          = f.label :bio
+          = f.text_area :bio, rows: "6", class: "form-control"
+        .box-footer.clearfix
+          .pull-right
+            =link_to "Cancel", admin_users_path
+            | &nbsp;or&nbsp;
+            button.btn.btn-primary type="submit" Submit
+      .col-sm-8.col-sm-offset-4.col-md-3.col-md-offset-0
+

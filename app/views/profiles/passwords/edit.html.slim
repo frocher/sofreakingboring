@@ -1,0 +1,23 @@
+- @title="Change password"
+= form_for(@user, url: profile_password_path) do |f|
+  .col-sm-8.col-md-6
+    .box.box-solid
+      .box-body
+        - if @user.errors.any?
+          .alert.alert-danger.alert-dismissable
+            button aria-hidden="true" data-dismiss="alert" class="close" type="button" ×
+            ul
+              - @user.errors.full_messages.each do |msg|
+                li = msg
+        .form-group
+          = f.label :password, "New password"
+          = f.password_field :password, :autofocus => true, placeholder: "Enter new password", class: "form-control"
+        .form-group
+          = f.label :password_confirmation, "Confirm password"
+          = f.password_field :password_confirmation, placeholder: "Confirm new password", class: "form-control"
+      .box-footer.clearfix
+        .pull-right
+          =link_to "Cancel", profile_path
+          | &nbsp;or&nbsp;
+          button.btn.btn-primary type="submit" Change my password
+  .col-sm-8.col-sm-offset-4.col-md-3.col-md-offset-0

@@ -1,0 +1,53 @@
+header.header
+  = link_to root_path, class: "logo", title: "Home" do
+    | So Freaking Boring
+  nav.navbar.navbar-static-top role="navigation"
+    a role="button" data-toggle="offcanvas" class="navbar-btn sidebar-toggle" href="#"
+      span.sr-only Toggle navigation
+      span.icon-bar
+      span.icon-bar
+      span.icon-bar
+    ul.nav.navbar-nav
+      li
+        = link_to projects_path, title: "Projects" do
+          i.fa.fa-briefcase
+          span  My Projects
+      - if current_user.is_admin?
+        li.dropdown
+          a.dropdown-toggle href="#" data-toggle="dropdown"
+            i class="fa fa-laptop"
+            |  Admin 
+            b.caret
+          ul.dropdown-menu
+            li
+              = link_to admin_projects_path, title: "Projects", style:"margin-left: 10px;" do
+                i.fa.fa-rocket
+                | Projects
+            li
+              = link_to admin_users_path, title: "Users", style:"margin-left: 10px;" do
+                i.fa.fa-users
+                | Users
+    .navbar-right
+      ul.nav.navbar-nav
+        li.dropdown.user.user-menu
+          a.dropdown-toggle href="#" data-toggle="dropdown"
+            i.glyphicon.glyphicon-user
+            span
+              = current_user.name 
+              i.caret
+          ul.dropdown-menu
+            li.user-header.bg-light-blue
+              = image_tag avatar_icon(current_user.email, 100), class: "img-circle"
+              p
+                = current_user.name
+                small 
+                  | Member since 
+                  = current_user.created_at.strftime("%b. %Y")
+            li.user-footer
+              .pull-left
+                = link_to profile_path, class: "btn btn-default btn-flat" do
+                    | Profile
+              .pull-right
+                = link_to destroy_user_session_path, class: "btn btn-default btn-flat", method: :delete, title: "Logout" do
+                  | Sign out
+

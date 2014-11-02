@@ -1,0 +1,13 @@
+- @title="Internal error"
+.error-page
+  h2.headline.text-info 500
+  .error-content
+    h3
+      i.fa.fa-warning.text-yellow
+      |  Oops! Something went wrong.
+    p
+      | We will work on fixing that right away. 
+      | Meanwhile, you may 
+      = link_to root_path, title: "Home" do
+        | return to home page.
+

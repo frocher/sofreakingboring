@@ -1,0 +1,68 @@
+- @title="Dashboard"
+.row
+  .col-lg-12
+    = callout
+.row
+  .col-lg-3.col-xs-6
+    .small-box.bg-aqua
+      .inner
+        h3 
+          = current_user.projects.opened.count
+        p Active projects
+      .icon
+        i.fa.fa-flask
+  .col-lg-3.col-xs-6
+    .small-box.bg-green
+      .inner
+        h3 
+          = current_user.tasks.not_started.count + current_user.tasks.in_progress.count
+        p Assigned tasks
+      .icon
+        i.fa.fa-tasks
+  .col-lg-3.col-xs-6
+    .small-box.bg-yellow
+      .inner
+        h3 
+          = duration(current_user.tasks.sum(:remaining_estimate))
+        p Remaining work
+      .icon
+        i.fa.fa-paper-plane
+  .col-lg-3.col-xs-6
+    .small-box.bg-red
+      .inner
+        h3 
+           = duration(current_user.work_logged)
+        p Total work done
+      .icon
+        i.fa.fa-beer
+.row
+  .col-lg-6
+    .box.box-solid.box-primary
+      .box-header
+        h3.box-title Recent projects
+        .box-tools.pull-right
+          button.btn.btn-primary.btn-sm data-widget="collapse"
+            i.fa.fa-minus
+      .box-body
+        .row
+          - @recent_openings.each do |opening|
+            .col-sm-6.col-md-4
+              = render partial: "project_card", locals: {project: opening.project}
+  .col-lg-6
+    .box.box-solid.box-info
+      .box-header
+        h3.box-title Work done
+        .box-tools.pull-right
+          .input-group.no-margin
+            input#periodInput.form-control name="period" readonly="readonly" value=(format_period(@period_start, @period_end)) style="width:200px"
+            button#previousPeriod.btn.btn-default.btn-flat type="button" title="Previous period" style="background-color:white"
+              i.fa.fa-caret-left
+            button#nextPeriod.btn.btn-default.btn-flat type="button" title="Next period" style="background-color:white"
+              i.fa.fa-caret-right
+            span#dpPeriod.input-append.date data-date=(@period_start.strftime("%d-%m-%Y")) data-date-format="dd-mm-yyyy"
+              button.btn.btn-default.btn-flat type="button" title="Choose" style="background-color:white"
+                i.fa.fa-caret-down
+      .box-body
+        = render partial: 'work_week_table', locals: { work_week: @work_week}
+
+

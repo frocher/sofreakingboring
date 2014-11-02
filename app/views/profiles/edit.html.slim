@@ -1,0 +1,54 @@
+- @title="Edit profile"
+= form_for(@user, url: profile_path, html: { multipart: true }) do |f|
+  .col-sm-8.col-md-6
+    .box.box-solid
+      .box-body
+        h3 Please fill out the form below to update your profile.
+        
+        hr
+        - if @user.errors.any?
+          .alert.alert-danger.alert-dismissable
+            button aria-hidden="true" data-dismiss="alert" class="close" type="button" ×
+            ul
+              - @user.errors.full_messages.each do |msg|
+                li = msg
+        h4.bottom-15 General Information
+        .form-group
+          = f.label :name
+          = f.text_field :name, :autofocus => true, 'placeholder' => "Enter your name", class: "form-control"
+        .form-group
+          = f.label :email
+          = f.email_field :email, 'placeholder' => "Enter new email", class: "form-control"
+        .form-group
+          = f.label :bio
+          = f.text_area :bio, rows: "6", 'placeholder' => "Tell us about yourself in fewer than 500 characters.", class: "form-control"
+      .box-footer.clearfix
+        .pull-right
+          =link_to "Cancel", profile_path
+          | &nbsp;or&nbsp;
+          button.btn.btn-primary type="submit" Save
+  .col-sm-8.col-sm-offset-4.col-md-3.col-md-offset-0
+    .box.box-solid
+      .box-header
+        h3.box-title Avatar
+      .box-body
+        - if @user.avatar?
+          | You can change your avatar here
+          br
+          | or remove the current avatar to revert to #{link_to "gravatar.com", "http://gravatar.com"}
+        - else
+          | You can upload an avatar here
+          br
+          | or change it at #{link_to "gravatar.com", "http://gravatar.com"}
+        hr
+        button type="button" class="btn btn-default btn-sm js-choose-user-avatar-button"
+          i.fa.fa-paperclip
+          span  Choose File...
+        | &nbsp;
+        span.file_name.js-avatar-filename  File name...
+        = f.file_field :avatar, class: "js-user-avatar-input hidden"
+        .light The maximum file size allowed is 100KB.
+        - if @user.avatar?
+          hr
+          = link_to 'Remove avatar', profile_avatar_path, data: { confirm: "Avatar will be removed. Are you sure?"}, method: :delete, class: "btn btn-remove btn-danger btn-sm remove-avatar"
+

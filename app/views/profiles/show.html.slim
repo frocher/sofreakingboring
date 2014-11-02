@@ -1,0 +1,29 @@
+- @title = current_user && @user.id == current_user.id ? "My profile" : @user.name + "'s profile"
+.col-sm-8.col-md-8
+  .box.box-solid
+    .box-body
+      .row
+        .col-sm-6.col-md-2
+          .thumbnail
+            = image_tag avatar_icon(@user.email, 165)
+        .col-sm-6.col-md-10
+          h3
+            = @user.name
+            br
+            small = @user.email
+          hr
+          = link_to edit_profile_path, class: "btn btn-default btn-flat" do
+            | Edit Profile
+          | &nbsp;
+          = link_to edit_profile_password_path, class: "btn btn-default btn-flat" do
+            | Change password
+
+      .row
+        .col-sm-12
+          h4
+            i.fa.fa-user
+            |  About me
+          hr
+          p.bottom-15
+           = @user.bio
+.col-sm-4.col-sm-offset-4.col-md-4.col-md-offset-0

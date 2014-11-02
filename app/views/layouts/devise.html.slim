@@ -1,0 +1,58 @@
+doctype html
+html.bg-black
+  = render "layouts/head", title: "Home"
+  body.bg-black data-spy="scroll" data-target=".navbar-fixed-top"
+    nav.navbar.navbar-custom.navbar-fixed-top role="navigation"
+      .container
+        .navbar-header
+          button.navbar-toggle type="button" data-toggle="collapse" data-target=".navbar-main-collapse"
+            i.fa.fa-bars
+          a.navbar-brand.page-scroll href="#page-top"
+            i.fa.fa-tasks
+            span.light
+              |  So Freaking Boring
+        .collapse.navbar-collapse.navbar-right.navbar-main-collapse
+          ul.nav.navbar-nav
+            li.hidden.active
+              a href="#page-top"
+            li
+              a class="page-scroll" href="#about" About
+            li
+              a class="page-scroll" href="#contact" Contact
+            li
+              a href="http://blog.sofreakingboring.com" target='_blank' Blog
+    header#page-top.login-header
+      = yield
+    section#about.container.content-section.text-center
+      .row
+        .col-lg-8.col-lg-offset-2
+          h2 About SoFreakingBoring
+          p
+            | SoFreakingBoring is a free and simple project management and time tracking application. It allows you to easily create your own projects and tasks, invite people and start working together.
+          p
+            | SoFreakingBoring mantra is to help you to make project boring tasks not so boring.   
+          p
+            | SoFreakingBoring is not communication oriented. You won't be able to chat, share documents, create discussions and post messages. If you want to communicate with others, just use software like 
+            a href="https://www.basecamp.com/" Basecamp
+            |  or better : talk face-to-face.
+          p Oh, we only said it once so we repeat it : SoFreakingBoring is free as in free beer.
+    section#contact.container.content-section.text-center
+      .container
+        .col-lg-8.col-lg-offset-2
+          h2 Contact us
+          p Feel free to email us to provide some feedback, give us suggestions for new features, or to just say hello!
+          p
+            a href="mailto:sofreakingboring@gmail.com" sofreakingboring@gmail.com
+          ul.list-inline.banner-social-buttons
+            li
+              a.btn.btn-default.btn-lg href="https://twitter.com/FreakingBoring"
+                i.fa.fa-twitter.fa-fw
+                span.network-name  Twitter
+            li
+              a.btn.btn-default.btn-lg href="https://plus.google.com/u/1/102285164051410510078/posts" 
+                i.fa.fa-google-plus.fa-fw
+                span.network-name  Google+
+    = render "layouts/footer_panel"
+    = render "layouts/flash"
+
+    = javascript_include_tag "application"

@@ -1,0 +1,31 @@
+production: &base
+  #
+  # 1. Olb app settings
+  # ==========================
+  olb:
+    https: true
+    google_analytics: ""
+
+  #
+  # 2. Auth settings
+  # ==========================
+
+  omniauth:
+    enabled: true
+
+    # Uncomment providers
+    providers:
+      # - { name: 'google_oauth2', app_id: 'APP ID',
+      #    app_secret: 'APP SECRET',
+      #    args: {} }
+      # - { name: 'facebook', app_id: 'APP ID',
+      #    app_secret: 'APP SECRET'}
+      # - { name: 'github', app_id: 'APP ID',
+      #    app_secret: 'APP SECRET',
+      #    args: { scope: 'user:email' } }
+
+development:
+  <<: *base
+
+test:
+  <<: *base

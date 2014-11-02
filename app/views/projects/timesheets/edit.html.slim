@@ -1,0 +1,37 @@
+- @title="Timesheet"
+- unless @project.opened?
+  .row
+    .col-sm-12
+      .alert.alert-warning Project is not opened, you can't edit timesheets.
+.row
+  .col-sm-12
+    .box
+      .box-body
+        form.form-inline
+          .form-group
+            label for="periodInput" Period : 
+            .input-group
+              input#periodInput.form-control name="period" readonly="readonly" value=(format_period(@period_start, @period_end)) style="width:200px"
+              span.input-group-btn
+                button#previousPeriod.btn.btn-default.btn-flat type="button" title="Previous period"
+                  i.fa.fa-caret-left
+              span.input-group-btn
+                button#nextPeriod.btn.btn-default.btn-flat type="button" title="Next period"
+                  i.fa.fa-caret-right
+              span#dpPeriod.input-append.date.input-group-btn data-date=(@period_start.strftime("%d-%m-%Y")) data-date-format="dd-mm-yyyy"
+                button.btn.btn-default.btn-flat type="button" title="Choose"
+                  i.fa.fa-caret-down
+          | &nbsp;
+          .form-group
+            label for="members" Member : 
+            select#members.form-control
+              = options_for_select(@project.project_members.by_name.collect {|m| [m.username, m.user.id]}, current_user.id)
+          | &nbsp;
+          .form-group
+            label for="display_completed" Display completed tasks : 
+            input#display_completed type="checkbox"
+  .col-sm-8
+.row
+  .col-sm-12
+    #timesheetGrid
+

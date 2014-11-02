@@ -1,0 +1,2 @@
+module Profiles::AvatarsHelper
+end

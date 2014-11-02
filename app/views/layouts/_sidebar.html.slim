@@ -1,0 +1,33 @@
+section.sidebar
+  .project-panel
+    - if @project.attachment?
+      .image.pull-left
+        = image_tag @project.attachment.url(:small_thumb), class: "img-circle"
+    .info.pull-left
+      p
+        = @project.name
+      a
+        i class=('fa fa-circle text-' + class_for_project_state(@project))
+        = @project.state
+        - if can?(current_user, :update_project, @project)
+          | &nbsp;
+          =link_to edit_project_path(@project), title: "Edit project"
+            i.fa.fa-pencil
+  ul.sidebar-menu
+    li class=("active" if params[:controller] == "home")
+      = link_to project_path(@project) do
+        i.fa.fa-dashboard
+        span Dashboard
+    li
+      = link_to edit_project_timesheet_path(@project) do
+        i.fa.fa-calendar
+        span Timesheet
+    li
+      = link_to project_tasks_path(@project) do
+        i.fa.fa-tasks
+        span Tasks
+    li class=("active" if params[:controller] == "projects/members")
+      = link_to project_members_path(@project) do
+        i.fa.fa-users
+        span Members
+

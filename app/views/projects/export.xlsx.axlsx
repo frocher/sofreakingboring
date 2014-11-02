@@ -1,0 +1,72 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Tasks") do |sheet|
+  sheet.add_row [
+    "Code",
+    "Name",
+    "Note",
+    "Assignee",
+    "Original estimate",
+    "Work logged",
+    "Remaining estimate",
+    "Delta",
+    "Created at",
+    "Updated at"
+  ]
+  @project.tasks.each do |task|
+    sheet.add_row [
+      task.code, 
+      task.name,
+      task.description,
+      task.assignee.nil? ? "": task.assignee.name,
+      task.original_estimate,
+      task.work_logged,
+      task.remaining_estimate,
+      task.delta,
+      task.created_at,
+      task.updated_at]
+  end
+end
+
+wb.add_worksheet(name: "Work") do |sheet|
+  sheet.add_row [
+    "Code",
+    "Name",
+    "Day",
+    "Worked",
+    "Created at",
+    "Updated at"
+  ]
+  @project.tasks.each do |task|
+    task.work_logs.each do |log|
+      sheet.add_row [
+        task.code, 
+        task.name,
+        log.day,
+        log.worked,
+        log.created_at,
+        log.updated_at]
+      end
+    end
+end
+
+wb.add_worksheet(name: "Snapshots") do |sheet|
+  sheet.add_row [
+    "Task count",
+    "Original estimate",
+    "Work logged",
+    "Remaining estimate",
+    "Delta",
+    "Created at",
+    "Updated at"
+  ]
+  @project.project_snapshots.each do |snap|
+    sheet.add_row [
+      snap.task_count,
+      snap.original_estimate,
+      snap.work_logged,
+      snap.remaining_estimate,
+      snap.delta,
+      snap.created_at,
+      snap.updated_at]
+  end
+end

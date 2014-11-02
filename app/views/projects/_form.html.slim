@@ -1,0 +1,51 @@
+= form_for(@project, html: { multipart: true }) do |f|
+  .col-sm-8.col-md-6
+    .box.box-solid
+      .box-body
+        - if @project.errors.any?
+          .alert.alert-danger.alert-dismissable
+            button aria-hidden="true" data-dismiss="alert" class="close" type="button" ×
+            ul
+              - @project.errors.full_messages.each do |msg|
+                li = msg
+        h4.bottom-15 General Information
+        .form-group
+          = f.label :code
+          = f.text_field :code, :autofocus => true, 'placeholder' => "Enter project code", class: "form-control"
+        .form-group
+          = f.label :name
+          = f.text_field :name, 'placeholder' => "Enter project name", class: "form-control"
+        .form-group
+          = f.label :description
+          = f.text_area :description, rows: "6", class: "form-control"
+        .form-group
+          = f.label :state
+          = f.select :state, options_for_select(options_for_project(@project), @project.state), {}, {class: "form-control"}
+        .box-footer.clearfix
+          .pull-right
+            =link_to "Cancel", session[:return_to]
+            | &nbsp;or&nbsp;
+            button.btn.btn-primary type="submit" Submit
+  .col-sm-8.col-sm-offset-4.col-md-3.col-md-offset-0
+    .box.box-solid
+      .box-header
+        h3.box-title Picture
+      .box-body
+        - if @project.attachment?
+          | You can change project picture here 
+          | or remove the current project picture
+          .project-picture
+            = image_tag @project.attachment.url(:medium)
+        - else
+          | You can upload a picture here
+        hr
+        button type="button" class="btn btn-default btn-sm js-choose-project-picture-button"
+          i.fa.fa-paperclip
+          span  Choose File...
+        | &nbsp;
+        span.file_name.js-picture-filename  = @project.attachment.original_filename
+        = f.file_field :attachment, class: "js-project-picture-input hidden"
+        .light The maximum file size allowed is 200KB.
+        - if @project.attachment?
+          hr
+          = link_to 'Remove picture', project_remove_attachment_path(@project), data: { confirm: "Picture will be removed. Are you sure?"}, method: :put, class: "btn btn-danger btn-small remove-picture"
