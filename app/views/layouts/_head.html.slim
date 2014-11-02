@@ -1,0 +1,23 @@
+head
+  title
+    = "#{@title} | " if defined?(@title)
+    | So Freaking Boring
+  - if defined?(@description)
+    meta name="description" content=@description
+  - else
+    meta name="description" content="So Freaking Boring"
+  meta name="viewport" content="width=device-width, initial-scale=1.0"
+
+  link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"
+  link rel="icon" href="/favicon.ico" type="image/x-icon"
+  
+  css:
+    @media screen and (min-width: 767px) {
+      .login-header {
+        background: url(#{randomized_background_image}) no-repeat center scroll;
+      }
+    }
+
+  = stylesheet_link_tag "application"
+  = csrf_meta_tags
+  = include_gon

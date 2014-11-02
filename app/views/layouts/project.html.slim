@@ -1,0 +1,21 @@
+doctype html
+html
+  = render "layouts/head", title: "Home"
+  body.pace-done.skin-black data-page=(body_data_page)
+    = render "layouts/header_panel", title: "Home"
+    .wrapper.row-offcanvas.row-offcanvas-left
+      aside.left-side.sidebar-offcanvas
+        = render "layouts/sidebar"
+      aside.right-side
+        section.content-header
+          h1
+            = "#{@title}" if defined?(@title)
+            -if defined?(@subtitle)
+              small =@subtitle
+          .breadcrumb
+            = render_breadcrumbs separator: ' > '
+        section.content =yield          
+    = render "layouts/footer_panel"
+    = render "layouts/flash"
+
+    = javascript_include_tag "application"

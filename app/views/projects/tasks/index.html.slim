@@ -1,0 +1,60 @@
+- @title="Tasks"
+.row
+  .col-lg-12
+    = tasks_callout(@project)
+.row
+  .col-sm-2
+    - if can?(current_user, :create_project_task, @project)
+      .form-group
+        a#btn-add-task.btn.btn-primary.btn-block title="Add a new task (a)" data-toggle='tooltip' Add task
+    - if can?(current_user, :delete_project_task, @project)
+      .form-group
+        a#btn-delete-task.btn.btn-danger.btn-block title="Delete selected tasks (d)" data-toggle='tooltip' Delete tasks
+    .box.box-primary
+      .box-header
+        h3.box-title Summary
+      .box-body
+        | Tasks&nbsp;
+        span#tasks_count.badge.pull-right 0
+        br
+        | Estimate &nbsp;
+        span#tasks_estimate.badge.pull-right 0
+        br
+        | Logged &nbsp;
+        span#tasks_logged.badge.pull-right 0
+        br
+        | Remaining&nbsp;
+        span#tasks_remaining.badge.pull-right 0
+        br
+        | Delta &nbsp;
+        span#tasks_delta.badge.pull-right 0
+  .col-sm-10
+    .row
+      .col-sm-12
+        .box
+          .box-body
+            input#tasksFilter placeholder="Search..."
+            | &nbsp;
+            input#display_completed type="checkbox"
+            | &nbsp;
+            label for="display_completed" Display completed tasks
+    .row
+      .col-sm-12
+        #loadingSpinner
+          i.fa.fa-cog.fa-spin
+          | &nbsp;loading...
+        #tasksGrid
+
+#noteModal.modal.fade tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close type="button" data-dismiss="modal"
+          span aria-hidden="true" &times;
+          span class="sr-only" Close
+        h4.modal-title Edit Notes
+      .modal-body
+        textarea#task-notes.form-control rows="4" placeholder="Enter notes about the task"
+      .modal-footer
+        button.btn.btn-default type="button" data-dismiss="modal" Close
+        button#task-notes-save.btn.btn-primary type="button" Save changes

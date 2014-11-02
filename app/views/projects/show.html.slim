@@ -1,0 +1,128 @@
+- @title = @project.name
+- @subtitle = @project.description
+.row
+  .col-lg-12
+    = dashboard_callout(@project)
+.row
+  .col-lg-3.col-xs-6
+    .small-box.bg-blue
+      .inner
+        h3 
+          = @project.progress
+          sup style="font-size:20px"
+            | %
+        p Project Progress
+      .icon
+        i.fa.fa-tachometer
+  .col-lg-3.col-xs-6
+    .small-box.bg-purple
+      .inner
+        h3 
+          = duration(@project.work_logged)
+        p Work done
+      .icon
+        i.fa.fa-check-square-o
+  .col-lg-3.col-xs-6
+    div  class=(@project.delta < 0 ? "small-box bg-red" : "small-box bg-green")
+      .inner
+        h3 
+          = duration(@project.delta)
+        p Project Delta
+      .icon
+        i.fa.fa-fire
+  .col-lg-3.col-xs-6
+    .small-box.bg-yellow
+      .inner
+        h3 
+          = @project.project_members.count
+        p Members
+      .icon
+        i.fa.fa-users
+
+.row
+  section.col-md-6.connectedSortable.ui-sortable
+    .box.box-solid.bg-teal-gradient
+      .box-header
+        .pull-right.box-tools
+          button.btn.bg-teal.btn-sm.pull-right data-widget="collapse" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Collapse"
+            i.fa.fa-minus
+
+        i.fa.fa-tasks
+        h3.box-title Burndown Chart (in days)
+      .box-body
+        #burndown-chart.chart style="height: 250px;"
+      .box-footer.no-border
+        .row
+          .col-xs-4.text-center style="border-right: 1px solid #f4f4f4"
+            input type="text" class="knob" data-readonly="true" value=(@project.tasks.not_started.count) data-max=(@project.tasks.count) data-width="60" data-height="60" data-fgColor="#39CCCC"
+            .knob-label Tasks not started
+          .col-xs-4.text-center style="border-right: 1px solid #f4f4f4"
+            input type="text" class="knob" data-readonly="true" value=(@project.tasks.in_progress.count) data-max=(@project.tasks.count) data-width="60" data-height="60" data-fgColor="#39CCCC"
+            .knob-label Tasks in progress
+          .col-xs-4.text-center
+            input type="text" class="knob" data-readonly="true" value=(@project.tasks.done.count) data-max=(@project.tasks.count) data-width="60" data-height="60" data-fgColor="#39CCCC"
+            .knob-label Tasks done
+
+    .box.box-danger
+      .box-header
+        .pull-right.box-tools
+          button.btn.bg-red.btn-sm.pull-right data-widget="collapse" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Collapse"
+            i.fa.fa-minus
+
+        i.fa.fa-user
+        h3.box-title Progress by members
+      .box-body
+        #members-chart.chart style="height: 250px;"
+
+  section.col-md-6.connectedSortable.ui-sortable
+    .box.box-solid.bg-green-gradient
+      .box-header
+        .pull-right.box-tools
+          button.btn.btn-success.btn-sm.pull-right data-widget="collapse" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Collapse"
+            i.fa.fa-minus
+
+        i.fa.fa-dollar
+        h3.box-title Cost Chart (in days)
+      .box-body
+        #budget-chart.chart style="height: 250px;"
+      .box-footer.no-border
+        .row
+          .col-xs-6.text-center style="border-right: 1px solid #f4f4f4"
+            input type="text" class="knob" data-readonly="true" value=(to_days(@project.work_logged)) data-max=(to_days(@project.total)) data-width="60" data-height="60" data-fgColor="#00C46A"
+            .knob-label Work logged
+          .col-xs-6.text-center style="border-right: 1px solid #f4f4f4"
+            input type="text" class="knob" data-readonly="true" value=(to_days(@project.remaining_estimate)) data-max=(to_days(@project.total)) data-width="60" data-height="60" data-fgColor="#00C46A"
+            .knob-label Remaining estimate
+
+    .box.box-primary
+      .box-header
+        .pull-right.box-tools
+          button.btn.bg-blue.btn-sm.pull-right data-widget="collapse" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Collapse"
+            i.fa.fa-minus
+
+        i.fa.fa-tags
+        h3.box-title Progress by tags
+      .box-body
+        #tags-chart.chart style="height: 250px;"
+javascript:
+
+  var members_done_data = {
+    data: #{raw members_done(@project)},
+    color: "#f56954"
+  }
+
+  var members_tbd_data = {
+    data: #{raw members_remaining(@project)},
+    color: "#f79f94"
+  }
+
+  var tags_done_data = {
+    data: #{raw tags_done(@project)},
+    color: "#0073B7"
+  }
+
+  var tags_tbd_data = {
+    data: #{raw tags_remaining(@project)},
+    color: "#0798ed"
+  }
+      

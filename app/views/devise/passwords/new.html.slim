@@ -1,0 +1,13 @@
+#login-box.form-box
+  .header Forgot your password? 
+
+  = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+    .body.bg-gray
+      = devise_error_messages!
+
+      .form-group
+        = f.email_field :email, placeholder:"Enter your email", class: "form-control", autofocus: true
+
+    .footer
+      = f.submit "Send me reset password instructions", class:"btn bg-olive btn-block"
+      = render "devise/shared/links"

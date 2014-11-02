@@ -1,0 +1,23 @@
+#login-box.form-box 
+  .header 
+    | Sign In
+  = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+    .body.bg-gray
+      .form-group
+        = f.email_field :email, class: "form-control", placeholder: "User Email", autofocus: true
+
+      .form-group
+        = f.password_field :password, class: "form-control", autocomplete: "off", placeholder: "Password"
+
+      .form-group
+        -if devise_mapping.rememberable?
+          div
+            = f.check_box :remember_me
+            | &nbsp;
+            = f.label :remember_me
+    .footer
+      = f.submit "Sign me in", class: "btn bg-olive btn-block"
+      = render "devise/shared/social"
+      = render "devise/shared/links"
+
+

@@ -1,0 +1,18 @@
+#login-box.form-box
+  .header Change your password
+
+  = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
+    .body.bg-gray
+      = devise_error_messages!
+    
+      = f.hidden_field :reset_password_token
+
+      .form-group
+        = f.password_field :password, autofocus: true, autocomplete: "off", class: "form-control", placeholder: "New Password"
+
+      .form-group
+        = f.password_field :password_confirmation, autocomplete: "off", class: "form-control", placeholder: "Confirm your Password"
+
+    .footer
+      = f.submit "Change my password", class: "btn bg-olive btn-block"
+      = render "devise/shared/links"

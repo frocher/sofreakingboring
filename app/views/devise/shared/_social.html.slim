@@ -1,0 +1,11 @@
+- if devise_mapping.omniauthable? && Olb.config.omniauth.enabled
+  .margin.text-center
+    = link_to user_omniauth_authorize_path(:facebook), class: "btn bg-light-blue btn-circle", title: "Sign in with FaceBook"
+      i.fa.fa-facebook
+    | &nbsp;
+    = link_to user_omniauth_authorize_path(:google_oauth2), class: "btn bg-red btn-circle", title: "Sign in with Google"
+      i.fa.fa-google
+    | &nbsp;
+    = link_to user_omniauth_authorize_path(:github), class: "btn bg-black btn-circle", title: "Sign in with Github"
+      i.fa.fa-github-alt
+

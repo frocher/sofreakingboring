@@ -1,0 +1,20 @@
+table#work_week_table.table.table-bordered
+  tbody
+    tr
+      th Project
+      th Mon.
+      th Tue.
+      th Wed.
+      th Thu.
+      th Fri.
+      th Sat.
+      th Sun.
+    -  work_week.projects.sort.map do |name, days|
+      tr
+      td = name
+      - days.each do |day|
+        td = duration(day)
+    tr
+      th Total
+      - work_week.total.each do |day|
+        th = duration(day)

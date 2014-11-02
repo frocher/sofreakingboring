@@ -1,0 +1,34 @@
+- @title="Members"
+.row
+  - if can?(current_user, :create_project_member, @project)
+    .col-sm-2
+      =link_to "Add members", new_project_member_path, class: "btn btn-primary btn-block", title: 'Add new members (a)', data: {toggle:'tooltip', keybinding: 'a'}
+  .col-sm-10
+    .box
+      .box-body.table-responsive.no-padding
+        table#members.table.table-hover
+            thead
+              tr role="row"
+                th
+                th Name
+                th Member since
+                th style="width:150px" Role
+                th Actions
+            tbody
+              - @members.each do |member|
+                tr
+                  td style="width:54px" = image_tag avatar_icon(member.email, 48), size: "48x48", class: "img-rounded"
+                  td = member.name
+                  td = date_only(member.created_at)
+                  td
+                    -if member.role == :admin || can?(current_user, :update_project_member, @project)
+                      = form_for(member, url: project_member_path(@project, member)) do |f|
+                        = f.select :role, options_for_select(@new_options, selected: member.role), {}, class: "form-control role-select"
+                    -else
+                      = member.role
+                  td
+                    -if can?(current_user, :delete_project_member, @project) && current_user.id != member.user_id
+                      =link_to project_member_path(id: member.id), data: { confirm: "Member will be removed from project. Are you sure?"}, method: :delete, class: "btn btn-danger btn-sm", title: "Remove member"
+                        i class="sign fa fa-trash-o bg-red"
+      .box-footer.clearfix
+        =paginate @members
