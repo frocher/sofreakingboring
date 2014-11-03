@@ -19,7 +19,16 @@ Before starting SoFreakingBoring you need to follow this steps :
 * copy olb.yml.example to olb.yml.
 * copy puma.rb.example to puma.rb
 * adapt the three files to your environment
-* start in development mode
+* migrate database with 'rake db:migrate'
+* start in development mode with 'rails s'
+
+The Whenever gem is used for cron jobs. To make it work :
+* Enter 'whenever' to see what would be added to your cron tab
+* Enter 'whenever -w' to add jobs to your crontab.
+
+
+Note : SoFreakingBoring works on Linux and Mac OS X. It has not been tested on Windows and the whenever should not work. If you work on Windows you should consider [Vagrant](https://www.vagrantup.com/).
+
 
 ### Credits
 
