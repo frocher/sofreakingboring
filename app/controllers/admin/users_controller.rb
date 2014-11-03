@@ -66,7 +66,7 @@ class Admin::UsersController < Admin::AdminController
   end 
 
   def user_params
-    params.require(:user).permit(:name, :email, :bio, :avatar, :password)
+    params.require(:user).permit(:name, :email, :bio, :avatar, :password, :admin)
   end
 
   # check if we need password to update user data
