@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :timeoutable,
          :omniauthable, :omniauth_providers => [:facebook, :google_oauth2, :github]
 
+  before_create :record_first_admin
   before_save :ensure_authentication_token
   alias_attribute :private_token, :authentication_token
 
@@ -104,6 +105,13 @@ class User < ActiveRecord::Base
   end
 
   private
+
+  # First user is always super admin
+  def record_first_admin
+    if User.count == 0
+      self.admin = true
+    end
+  end
 
   def generate_authentication_token
     loop do
