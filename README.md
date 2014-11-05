@@ -38,4 +38,4 @@ I want to thank :
 
 * [GitLab](https://gitlab.com/) : great open source project and more than a source of inspiration.
 * [Handsontable](http://handsontable.com/) : minimalist Excel-like data grid editor.
-* [Gratisography](http://gratisography.com/) : free high-resolution pictures that can be user on personal and commercial projects.
+* [Gratisography](http://gratisography.com/) : free high-resolution pictures that can be used on personal and commercial projects.
