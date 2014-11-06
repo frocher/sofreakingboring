@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/frocher/sofreakingboring.svg?branch=master)](https://travis-ci.org/frocher/sofreakingboring)
+[![Code Climate](https://codeclimate.com/github/frocher/sofreakingboring/badges/gpa.svg)](https://codeclimate.com/github/frocher/sofreakingboring)
 
 ## SoFreakingBoring
 
