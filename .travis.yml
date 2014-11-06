@@ -1,3 +1,9 @@
 language: ruby
 rvm:
   - 2.1.0
+
+before_script:
+  - cp config/database.yml.example config/database.yml
+  - cp config/olb.yml.example config/olb.yml
+  - cp config/puma.rb.example config/puma.rb
+  - bundle exec rake db:migrate
