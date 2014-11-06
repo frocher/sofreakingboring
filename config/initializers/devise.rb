@@ -231,6 +231,7 @@ Devise.setup do |config|
   config.omniauth :google_oauth2, "87303621993-6ubbnl8boav18k34daklmq9fpeqffn5l.apps.googleusercontent.com", "WXnv5ibPm8nMUP_9BW3W-Bca", { }
   config.omniauth :github, "146d32f62165d349d3b2", "4941ee034fb4b6142da199b520eb397c696363da", { scope: 'user:email' }
 
+  unless Olb.config.omniauth.providers.nil?
   Olb.config.omniauth.providers.each do |provider|
     provider_arguments = []
 
@@ -248,5 +249,6 @@ Devise.setup do |config|
     end
 
     config.omniauth provider['name'].to_sym, *provider_arguments
+  end
   end
 end
