@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/frocher/sofreakingboring.svg?branch=master)](https://travis-ci.org/frocher/sofreakingboring)
+
 ## SoFreakingBoring
 
 ### What is SoFreakingBoring ?
