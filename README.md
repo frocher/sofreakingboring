@@ -15,7 +15,7 @@ You can use it online here : [www.sofreakingboring.com](https://www.sofreakingbo
 
 ### Installation
 
-Before starting SoFreakingBoring you need to follow this steps :
+Before starting SoFreakingBoring you need to follow these steps :
 
 * copy database.yml.example to database.yml. 
 * copy olb.yml.example to olb.yml.
