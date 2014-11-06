@@ -227,6 +227,7 @@ Devise.setup do |config|
   config.sign_out_via = :delete
 
   # ==> OmniAuth
+
   unless Olb.config.omniauth.providers.nil?
     Olb.config.omniauth.providers.each do |provider|
       provider_arguments = []
