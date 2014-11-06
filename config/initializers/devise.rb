@@ -232,23 +232,23 @@ Devise.setup do |config|
   config.omniauth :github, "146d32f62165d349d3b2", "4941ee034fb4b6142da199b520eb397c696363da", { scope: 'user:email' }
 
   unless Olb.config.omniauth.providers.nil?
-  Olb.config.omniauth.providers.each do |provider|
-    provider_arguments = []
+    Olb.config.omniauth.providers.each do |provider|
+      provider_arguments = []
 
-    %w[app_id app_secret].each do |argument|
-      provider_arguments << provider[argument] if provider[argument]
+      %w[app_id app_secret].each do |argument|
+        provider_arguments << provider[argument] if provider[argument]
+      end
+
+      case provider['args']
+      when Array
+        # An Array from the configuration will be expanded.
+        provider_arguments.concat provider['args']
+      when Hash
+        # A Hash from the configuration will be passed as is.
+        provider_arguments << provider['args']
+      end
+
+      config.omniauth provider['name'].to_sym, *provider_arguments
     end
-
-    case provider['args']
-    when Array
-      # An Array from the configuration will be expanded.
-      provider_arguments.concat provider['args']
-    when Hash
-      # A Hash from the configuration will be passed as is.
-      provider_arguments << provider['args']
-    end
-
-    config.omniauth provider['name'].to_sym, *provider_arguments
-  end
   end
 end
