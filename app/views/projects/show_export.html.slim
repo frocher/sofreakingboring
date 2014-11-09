@@ -1,0 +1,15 @@
+- @title = @project.name
+- @subtitle = @project.description
+.row
+  .col-lg-12
+    .box.box-primary
+      .box-header
+        h3.box-title Export data
+      .box-body
+        p
+          | If you are anxious of losing your data or want to manipulate them to create your own reports, 
+          | you can export all your project data in Open Office XML format.
+        p
+          | To do so, just click on the button below : 
+      .box-footer
+        =link_to "Export project data", project_export_path(@project, format: :xlsx), class: "btn btn-primary"

@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :project, only: [:show, :edit, :update, :destroy]
 
-  layout "project", only: [:show]
+  layout "project", only: [:show, :show_export]
 
   add_breadcrumb "Home", :root_path
   add_breadcrumb "Projects", :projects_path
@@ -67,6 +67,12 @@ class ProjectsController < ApplicationController
     @project.save
     flash[:notice] = "Picture was successfully removed"
     redirect_to :back
+  end
+
+  def show_export
+    @project = Project.find(params[:project_id])
+    return render_404 unless can?(current_user, :export_project, @project)
+    add_breadcrumb @project.name, :project_show_export_path
   end
 
   def export

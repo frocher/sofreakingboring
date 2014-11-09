@@ -99,4 +99,8 @@ module ProjectsHelper
     (Float(seconds) / to_day).round(1)
   end
 
+  def to_date(day)
+    DateTime.strptime(day, "%Y%m%d")
+  end
+
 end

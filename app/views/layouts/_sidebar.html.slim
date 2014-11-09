@@ -30,4 +30,9 @@ section.sidebar
       = link_to project_members_path(@project) do
         i.fa.fa-users
         span Members
+    - if can?(current_user, :export_project, @project)
+      li class=("active" if params[:controller] == "projects/show_export")
+        = link_to project_show_export_path(@project)
+          i.fa.fa-download
+          span Export
 

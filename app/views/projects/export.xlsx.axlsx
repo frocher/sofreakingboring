@@ -43,7 +43,7 @@ wb.add_worksheet(name: "Work") do |sheet|
       sheet.add_row [
         task.code, 
         task.name,
-        log.day,
+        to_date(log.day),
         log.worked,
         log.created_at,
         log.updated_at]

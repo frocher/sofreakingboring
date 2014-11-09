@@ -24,6 +24,7 @@ Olb::Application.routes.draw do
 
   resources :projects do
     put :remove_attachment
+    get :show_export
     get :export
     scope module: :projects do
       resources :members
