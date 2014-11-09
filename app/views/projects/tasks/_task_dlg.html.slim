@@ -1,0 +1,44 @@
+#taskModal.modal.fade tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close type="button" data-dismiss="modal"
+          span aria-hidden="true" &times;
+          span class="sr-only" Close
+        h4.modal-title Edit Task
+      .modal-body
+        #task-errors.alert.alert-danger.alert-dismissable
+          button aria-hidden="true" data-dismiss="alert" class="close" type="button" ×
+          ul
+        ul.nav.nav-tabs
+          li
+            a href="#tab_informations" data-toggle="tab" Informations
+          li
+            a href="#tab_notes" data-toggle="tab" Notes
+        .tab-content
+          #tab_informations.tab-pane
+            form role="form"
+              .form-group
+                label ID
+                input#task-id.form-control type="text" readonly="true"
+              .form-group
+                label Name
+                input#task-name.form-control type="text"
+              .form-group
+                label Assigned to
+                select#task-assigned.form-control
+                  option value="-1"
+              .form-group
+                label Estimate
+                input#task-original.form-control type="text"
+              .form-group
+                label Remaining
+                input#task-remaining.form-control type="text"
+          #tab_notes.tab-pane
+            form role="form"
+              .form-group
+                label Notes
+                textarea#task-notes.form-control rows="6" placeholder="Enter notes about the task"
+      .modal-footer
+        button.btn.btn-default type="button" data-dismiss="modal" Close
+        button#task-notes-save.btn.btn-primary type="button" Save changes

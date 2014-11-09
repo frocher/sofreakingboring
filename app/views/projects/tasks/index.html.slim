@@ -45,16 +45,4 @@
           | &nbsp;loading...
         #tasksGrid
 
-#noteModal.modal.fade tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-  .modal-dialog
-    .modal-content
-      .modal-header
-        button.close type="button" data-dismiss="modal"
-          span aria-hidden="true" &times;
-          span class="sr-only" Close
-        h4.modal-title Edit Notes
-      .modal-body
-        textarea#task-notes.form-control rows="4" placeholder="Enter notes about the task"
-      .modal-footer
-        button.btn.btn-default type="button" data-dismiss="modal" Close
-        button#task-notes-save.btn.btn-primary type="button" Save changes
+= render 'task_dlg'
