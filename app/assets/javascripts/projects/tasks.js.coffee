@@ -21,6 +21,14 @@
       Tasks.filterData()
     data = null
 
+  findUsername: (user_id) ->
+    resu = ''
+    found = Tasks.members.where user_id:user_id
+    if found.length > 0
+      assigneeArguments = arguments
+      resu = found[0].username
+    resu
+
   codeRenderer: (instance, td, row, col, prop, value, cellProperties) ->
     escaped = "<a class='task-code' href='#taskModal' data-toggle='modal' data-tab='informations'>#{value}</a>"
     td.innerHTML = escaped
@@ -29,13 +37,8 @@
   assigneeRenderer: (instance, td, row, col, prop, value, cellProperties) ->
     if value? and value != ''
       value = parseInt(value, 10)
-      found = Tasks.members.where user_id:value
-      if found.length > 0
-        assigneeArguments = arguments
-        value = found[0].username
-        Handsontable.renderers.TextRenderer.apply(this, assigneeArguments)
-    else
-      Handsontable.renderers.TextRenderer.apply(this, arguments)
+      value = Tasks.findUsername(value)
+    Handsontable.renderers.TextRenderer.apply(this, arguments)
 
   dateRenderer: (instance, td, row, col, prop, value, cellProperties) ->
     date = moment(value)
@@ -188,20 +191,26 @@
         cellProperties = {}
         data = grid.handsontable('getInstance').getData()
         if col == 4 and data[row]
-          logged = data[row].work_logged
-          if logged != 0
-            cellProperties.readOnly = true
-          else
-            if gon.can_take_unassigned_task && !gon.can_update_tasks
-              cellProperties.readOnly = data[row].assignee_id != "" && data[row].assignee_id != null && parseInt(data[row].assignee_id) != gon.user_id
-            else
-              cellProperties.readOnly = !gon.can_update_tasks
+          cellProperties.readOnly = !Tasks.canChangeAssignee(row)
 
         return cellProperties
           
     })
 
     hot = Tasks.getTable()
+
+  canChangeAssignee: (row) ->
+    resu = true
+    data = Tasks.getTable().getData()
+    logged = data[row].work_logged
+    if logged != 0
+      resu = true
+    else
+      if gon.can_take_unassigned_task && !gon.can_update_tasks
+        resu = data[row].assignee_id == "" or data[row].assignee_id == null or parseInt(data[row].assignee_id) == gon.user_id
+      else
+        resu = gon.can_update_tasks
+    resu
 
   initMembers: (callback) ->
     Api.project_members gon.project_id, (members) =>
@@ -243,10 +252,12 @@
     if !gon.can_update_tasks
       $('#task-name').prop("readonly",true)
       $('#task-notes').prop("readonly",true)
-      $('#task-assigned').prop("readonly",true)
       $('#task-original').prop("readonly",true)
       $('#task-remaining').prop("readonly",true)
-      $('#task-notes-save').hide()
+      if !gon.can_take_unassigned_task
+        $('#task-assigned').prop("disabled",true)
+        $('#task-notes-save').hide()
+      
 
     $('#taskModal').on 'show.bs.modal', (e) ->
       tab = $(e.relatedTarget).data('tab')
@@ -254,21 +265,25 @@
       Tasks.fillTaskDialog()
 
     # Quickfix : conflict with handsontable. Must deselect cell
-    selectedCell = null
+    Tasks.selectedCell = null
     $('#taskModal').on 'shown.bs.modal', (e) ->
       hot = Tasks.getTable()
-      selectedCell = hot.getSelected()
+      Tasks.selectedCell = hot.getSelected()
       hot.deselectCell()
-      $('#task-notes').focus()
+      tab = $(e.relatedTarget).data('tab')
+      if tab == 'informations'
+        if gon.can_update_tasks
+          $('#task-name').focus()
+        else if Tasks.canChangeAssignee(Tasks.selectedCell[0])
+          $('#task-assigned').focus()
+      else
+        $('#task-notes').focus()
 
     $('#task-notes-save').on 'click', (e) ->
-      hot = Tasks.getTable()
-      if selectedCell?
+      if Tasks.selectedCell?
         errors = Tasks.validateTaskDialog()
         if errors.length == 0
-          row = selectedCell[0]
-          note = $('#task-notes').val()
-          hot.setDataAtRowProp(row, 'description', note)
+          Tasks.saveTaskDialog()          
           $('#taskModal').modal('hide')
         else
           Tasks.showErrorsTaskDialog(errors)
@@ -279,10 +294,20 @@
     cells = hot.getSelected()
     if cells?
       row = cells[0]
+      
+      user_id = hot.getDataAtRowProp(row, 'assignee_id')
+      if Tasks.canChangeAssignee(row)
+        $('#task-assigned').show()
+        $('#task-assigned-text').hide()
+        $('#task-assigned').val(user_id)
+      else
+        $('#task-assigned').hide()
+        $('#task-assigned-text').show()
+        $('#task-assigned-text').val(Tasks.findUsername(user_id))
+
       $('#task-id').val(hot.getDataAtRowProp(row, 'code'))
       $('#task-name').val(hot.getDataAtRowProp(row, 'name'))
       $('#task-notes').val(hot.getDataAtRowProp(row, 'description'))
-      $('#task-assigned').val(hot.getDataAtRowProp(row, 'assignee_id'))
 
       original = hot.getDataAtRowProp(row, 'original_estimate')
       $('#task-original').val(Duration.stringify(original, {format: 'micro'}))
@@ -309,6 +334,30 @@
       errors.push("Remaining estimate format is incorrect")
     
     errors
+
+  saveTaskDialog: ->
+    hot = Tasks.getTable()
+    row = Tasks.selectedCell[0]
+    physicalIndex = if hot.sortIndex.length > 0 then hot.sortIndex[row][0] else row
+    item = hot.getDataAtRow(physicalIndex)
+    doSave = false
+    
+    if gon.can_update_tasks
+      item.name        = $('#task-name').val()
+      item.description = $('#task-notes').val()
+      item.original_estimate =  Duration.parse($('#task-original').val())
+      item.remaining_estimate = Duration.parse($('#task-remaining').val())
+      item.delta = item.original_estimate - (item.work_logged + item.remaining_estimate)
+      doSave = true
+
+    if Tasks.canChangeAssignee(row)
+      item.assignee_id = $('#task-assigned').val()
+      doSave = true
+    
+    if doSave
+      Api.update_task gon.project_id, item.id, item, (task) ->
+        hot.render()
+
 
   showErrorsTaskDialog: (errors) ->
     value = ""
@@ -417,5 +466,3 @@
       $('#tasks_delta').addClass('bg-red')
     else if delta > 0
       $('#tasks_delta').addClass('bg-green')
-
-
