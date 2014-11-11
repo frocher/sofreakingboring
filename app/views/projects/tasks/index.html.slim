@@ -33,16 +33,29 @@
       .col-sm-12
         .box
           .box-body
-            input#tasksFilter placeholder="Search..."
-            | &nbsp;
-            input#display_completed type="checkbox"
-            | &nbsp;
-            label for="display_completed" Display completed tasks
+            form.navbar-form
+              .form-group
+                .btn-group
+                  button#show-cards.btn.btn-primary.active type="button" title='Cards view' data-toggle='tooltip'
+                    span class="fa fa-th-large"
+                  button#show-sheet.btn.btn-default type="button" title='Spreadsheet view' data-toggle='tooltip'
+                    span class="fa fa-table"
+              | &nbsp;
+              .form-group
+                input#tasksFilter.form-control placeholder="Search..."
+                | &nbsp;
+                button#display_completed.btn.btn-default type="button" title='Show completed tasks' data-toggle='tooltip'
+                  span class="fa fa-check"
     .row
       .col-sm-12
         #loadingSpinner
           i.fa.fa-cog.fa-spin
           | &nbsp;loading...
-        #tasksGrid
+        #tab-cards
+          h3 Hello cards
+          #tasksCards
+          
+        #tab-sheet
+          #tasksGrid
 
 = render 'task_dlg'
