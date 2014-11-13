@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-  before_action :user
+  before_action :user, except: [:avatar]
 
   add_breadcrumb "Home", :root_path
   add_breadcrumb "Profile", :profile_path

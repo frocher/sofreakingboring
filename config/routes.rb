@@ -22,6 +22,9 @@ Olb::Application.routes.draw do
     end
   end
 
+  get "/users/:id/avatar" => "users#avatar"
+
+
   resources :projects do
     put :remove_attachment
     get :show_export

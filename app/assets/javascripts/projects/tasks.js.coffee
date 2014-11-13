@@ -263,29 +263,7 @@ class TasksGridView
       tags = value.split(',')
       value = ''
       for tag in tags
-        tag = $.trim(tag)
-
-        index = 0
-        for i in [0..tag.length-1]
-          index += tag.charCodeAt(i)
-        index = index % 14
-
-        switch index
-          when 0 then labelClass = 'red'
-          when 1 then labelClass = 'yellow'
-          when 2 then labelClass = 'aqua'
-          when 3 then labelClass = 'blue'
-          when 4 then labelClass = 'light-blue'
-          when 5 then labelClass = 'green'
-          when 6 then labelClass = 'navy'
-          when 7 then labelClass = 'teal'
-          when 8 then labelClass = 'olive'
-          when 9 then labelClass = 'lime'
-          when 10 then labelClass = 'orange'
-          when 11 then labelClass = 'fuchsia'
-          when 12 then labelClass = 'purple'
-          when 13 then labelClass = 'maroon'
-          when 14 then labelClass = 'back'
+        labelClass = ProjectsHelper.getTagColor(tag)
         value += "<span class='label bg-#{labelClass}'>#{tag}</span>&nbsp;"
       escaped = Handsontable.helper.stringify(value)
       td.innerHTML = escaped
@@ -356,6 +334,74 @@ class TasksGridView
     @getTable().loadData(@model.getTasks())
     @render()
 
+
+class TasksCardsView
+
+  constructor: (@model) ->
+    @model.subscribe @onUpdate
+
+  initialize: ->
+
+  render: ->
+    toDo       = @model.getTasks().filter (task) -> task.work_logged == 0
+    inProgress = @model.getTasks().filter (task) -> task.work_logged > 0 and task.remaining_estimate > 0
+    done       = @model.getTasks().filter (task) -> task.work_logged > 0 and task.remaining_estimate == 0
+
+    @renderColumn($('#tasks-cards-todo'), toDo)
+    @renderColumn($('#tasks-cards-inprogress'), inProgress)
+    @renderColumn($('#tasks-cards-done'), done)
+
+    # Must iCheck and tooltip after dynamic creation
+    $("[data-toggle='tooltip']").tooltip({container: 'body'})
+#    $("input[type='checkbox'], input[type='radio']").iCheck({
+#        checkboxClass: 'icheckbox_minimal',
+#        radioClass: 'iradio_minimal'
+#    });
+
+  renderColumn: (column, tasks) ->
+    tpl = $('#task-card-tpl').html()
+    column.html('')
+    for task in tasks
+      tags = task.tag_list.split(',')
+      value = ''
+      for tag in tags
+        labelClass = ProjectsHelper.getTagColor(tag)
+        value += "<span class='card-tag bg-#{labelClass}' title='#{tag}' data-toggle='tooltip'>&nbsp;</span>"
+
+      descriptionClass = if task.description then 'fa-file-text-o' else 'fa-file-o'
+      description = if task.description then task.description else ''
+      badge_description = "<i class='task-description fa #{descriptionClass}' title='' data-toggle='tooltip'/>"
+
+      task_total = task.work_logged + task.remaining_estimate
+      task_progress = Math.round(if task_total > 0 then task.work_logged * 100 / task_total else 0)
+      delta_color = if task.delta < 0 then 'red' else 'green'
+
+      html = tpl.replace('%%id%%', task.id)
+      html = html.replace('%%tags%%', value)
+      html = html.replace('%%code%%', task.code)
+      html = html.replace('%%name%%', task.name)
+      html = html.replace('%%badge-description%%', badge_description)
+      html = html.replace(/%%task-progress%%/g, task_progress)
+      html = html.replace('%%delta-color%%', delta_color)
+
+      if task.assignee_id?
+        html = html.replace('%%hide_avatar%%', '')
+        html = html.replace('%%user_id%%', task.assignee_id)
+        html = html.replace('%%username%%', @model.findUsername(task.assignee_id))
+        
+      else
+        html = html.replace('%%user_id%%', 1)
+        html = html.replace('%%hide_avatar%%', 'hide')
+
+
+
+      column.append(html)
+      $("#card-#{task.id}").find('i.task-description').attr('title', description)
+
+  onUpdate: =>
+    @render()
+
+
 @Tasks=
   
   init: ->
@@ -363,10 +409,12 @@ class TasksGridView
     Tasks.model.subscribe Tasks.onUpdate
 
     Tasks.gridView = new TasksGridView(Tasks.model)
+    Tasks.cardsView = new TasksCardsView(Tasks.model)
 
     Tasks.model.loadMembers( ->
       Tasks.initDialogAssignee()
       Tasks.gridView.initialize()
+      Tasks.cardsView.initialize()
     )
 
     Tasks.initTabs()    
@@ -387,13 +435,13 @@ class TasksGridView
     $('#show-sheet').on 'click', ->
       $('#tab-sheet').show()
       $('#tab-cards').hide()
-      Tasks.gridView.render()
       $('#show-cards').toggleClass('active')
       $('#show-cards').removeClass('btn-primary')
       $('#show-cards').addClass('btn-default')
       $('#show-sheet').toggleClass('active')
       $('#show-sheet').removeClass('btn-default')
       $('#show-sheet').addClass('btn-primary')
+      Tasks.currentView().render()
 
     $('#show-cards').on 'click', ->
       $('#tab-cards').show()
@@ -404,6 +452,7 @@ class TasksGridView
       $('#show-sheet').toggleClass('active')
       $('#show-sheet').removeClass('btn-primary')
       $('#show-sheet').addClass('btn-default')
+      Tasks.currentView().render()
 
   initButtons: ->
     $("#btn-add-task").on "click", ->
@@ -434,6 +483,8 @@ class TasksGridView
   currentView: ->
     if $('#tab-sheet').is(':visible')
       Tasks.gridView
+    else
+      Tasks.cardsView
 
   deleteTasks: ->
     Tasks.currentView().deleteTasks()

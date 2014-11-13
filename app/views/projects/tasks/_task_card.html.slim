@@ -1,0 +1,20 @@
+#task-card-tpl.hide
+  .card id='card-%%id%%'
+    .card-tags
+      | %%tags%%
+    .card-body
+      div
+        input.card-check type="checkbox"
+        | &nbsp;
+        a.card-code href='#' %%code%%
+        img.card-avatar class="%%hide_avatar%%" data-toggle="tooltip" src="/users/%%user_id%%/avatar?size=30" title="%%username%%" width="30" height="30"
+      div
+        | %%name%%
+      .card-bagdes
+        | %%badge-description%%
+      .progress.xs data-toggle="tooltip" data-original-title="%%task-progress%%%"
+        div class="progress-bar progress-bar-%%delta-color%%" style="width:%%task-progress%%%"
+      .card-avatars
+        
+
+

@@ -52,10 +52,27 @@
           i.fa.fa-cog.fa-spin
           | &nbsp;loading...
         #tab-cards
-          h3 Hello cards
-          #tasksCards
-          
+          .row
+            .col-md-4
+              .box.box-solid.bg-blue
+                .box-header
+                  h3.box-title To Do
+                #tasks-cards-todo.box-body
+            .col-md-4
+              .box.box-solid.bg-yellow
+                .box-header
+                  h3.box-title In Progress
+                #tasks-cards-inprogress.box-body
+            .col-md-4
+              .box.box-solid.bg-green
+                .box-header
+                  h3.box-title Done
+                #tasks-cards-done.box-body
+
+          .row
+            #tasksCards
         #tab-sheet
           #tasksGrid
 
+= render 'task_card'
 = render 'task_dlg'

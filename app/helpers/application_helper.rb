@@ -7,9 +7,9 @@ module ApplicationHelper
     if user && user.avatar.present?
       size = 40 if size.nil? || size <= 0
       if size <= 100
-        user.avatar.url(:thumb)
+        URI.join(request.url, user.avatar.url(:thumb))
       else
-        user.avatar.url(:medium)
+        URI.join(request.url, user.avatar.url(:medium))
       end
     else
       gravatar_icon(user_email, size)
@@ -20,7 +20,7 @@ module ApplicationHelper
     size = 40 if size.nil? || size <= 0
 
     if !Olb.config.gravatar.enabled || user_email.blank?
-      '/assets/no_avatar.png'
+      URI.join(request.url, '/assets/no_avatar.png')
     else
       gravatar_url = olb_config.https ? Olb.config.gravatar.ssl_url : Olb.config.gravatar.plain_url
       user_email.strip!

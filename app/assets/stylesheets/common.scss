@@ -1,3 +1,9 @@
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
 
 /** FLASH message **/
 .flash-container {
@@ -102,4 +108,56 @@ i.task-note {
 
 #members tbody tr td {
   vertical-align: middle;
+}
+
+.card {
+  position: relative;
+  background: #fff;
+  margin-bottom: 3px;
+  width: 100%;
+  @include border-radius(2px);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card-check {
+  vertical-align: middle;
+}
+
+.card-body {
+  padding: 6px;
+  color: #444;
+
+  a {
+    font-size: 16px;
+    color : #555;
+  }
+
+  .progress {
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+}
+
+.card-code {
+  vertical-align: middle;
+}
+
+.card-tags {
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+.card-tag {
+  float: left;
+  width: 30px;
+  height: 5px;
+  margin-bottom: 1px;
+}
+
+.card-bagdes i {
+  color : #a6a6a6;
+}
+
+.card-avatar {
+  float: right;
 }
