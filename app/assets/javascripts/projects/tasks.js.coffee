@@ -5,10 +5,7 @@ class TasksModel
     @tasks = []
     @members = []
     @selectableMembers = []
-    @filter = ''
-    @displayCompleted = false
     @subscribers = []
-    @tasks_total = 0
 
   subscribe: (callback) ->
     @subscribers.push callback
@@ -21,15 +18,17 @@ class TasksModel
 
   loadTasks: ->
     Api.tasks gon.project_id, (tasks) =>
-      @tasks_total = tasks.length
-      @tasks = @filterTasks(tasks)
+      @tasks = tasks
       @notify()
     data = null
 
-  getTasks: ->
-    @tasks
+  getTasksTotal: ->
+    @tasks.length
 
-  createTask: ->
+  getTasks: (filter = '', displayCompleted = true) ->
+    @filterTasks(@tasks, filter, displayCompleted)
+
+  createTask: =>
     task = {name: "New task", original_estimate: 0}
     Api.create_task gon.project_id, task, (task) =>
       @tasks.push task
@@ -69,30 +68,33 @@ class TasksModel
   setTask: (tasks) ->
     @tasks = tasks
 
-  filterTasks: (tasks) ->
+  filterTasks: (tasks, filter = '', displayCompleted = true) ->
     data = tasks
-    if @filter.length > 0
+    if filter.length > 0
       filtered = []
       for task in data
-        addIt = task.name.indexOf(@filter) > -1
+        addIt = task.code.indexOf(filter) > -1
+
+        if !addIt
+          addIt = task.name.indexOf(filter) > -1
 
         if !addIt
           tags = task.tag_list.split(',')
           for tag in tags
             tag = $.trim(tag)
-            if tag.indexOf(@filter) > -1
+            if tag.indexOf(filter) > -1
               addIt = true
               break
 
         if !addIt
           found = @members.where user_id:task.assignee_id
-          addIt = found.length > 0 && found[0].username.indexOf(@filter) > -1
+          addIt = found.length > 0 && found[0].username.indexOf(filter) > -1
 
         filtered.push(task) if addIt
 
       data = filtered
   
-    if !@displayCompleted
+    if !displayCompleted
       filtered = []
       for task in data
         if task.remaining_estimate > 0 or task.original_estimate == 0
@@ -136,6 +138,11 @@ class TasksGridView
 
   getTable: ->
     $('#tasksGrid').handsontable('getInstance')
+
+  getTasks: ->
+    filter = $('#tasksFilter').val()
+    displayCompleted = $('#display_completed').hasClass('active')
+    @model.getTasks(filter, displayCompleted)
 
   initialize: ->
     @initGrid()
@@ -331,7 +338,8 @@ class TasksGridView
   onUpdate: =>
     $('#loadingSpinner').hide()
     $('#tasksGrid').show()
-    @getTable().loadData(@model.getTasks())
+
+    @getTable().loadData(@getTasks())
     @render()
 
 
@@ -339,26 +347,54 @@ class TasksCardsView
 
   constructor: (@model) ->
     @model.subscribe @onUpdate
+    @selectedTask = null
 
   initialize: ->
+    # nothing to do here
+
+  getSelectedTask: ->
+    @selectedTask
+
+  deselectTask: ->
+    # nothing to do here
+
+  deleteTasks: ->
+
+    selectedTasks = $('.card-check:checked')
+    if selectedTasks.length > 0
+      if confirm('Task(s) will be deleted. Are you sure ?')
+        tasks = []
+        for selected in selectedTasks
+          tasks.push(@model.getTask($(selected).data('id')))
+        @model.removeTasks(tasks)
+    else
+      alert('You must select at least one task')
+
+  getTasks: ->
+    filter = $('#tasksFilter').val()
+    @model.getTasks(filter)
 
   render: ->
-    toDo       = @model.getTasks().filter (task) -> task.work_logged == 0
-    inProgress = @model.getTasks().filter (task) -> task.work_logged > 0 and task.remaining_estimate > 0
-    done       = @model.getTasks().filter (task) -> task.work_logged > 0 and task.remaining_estimate == 0
+    tasks = @getTasks()
 
-    @renderColumn($('#tasks-cards-todo'), toDo)
-    @renderColumn($('#tasks-cards-inprogress'), inProgress)
-    @renderColumn($('#tasks-cards-done'), done)
+    toDo       = tasks.filter (task) -> task.work_logged == 0
+    inProgress = tasks.filter (task) -> task.work_logged > 0 and task.remaining_estimate > 0
+    done       = tasks.filter (task) -> task.work_logged > 0 and task.remaining_estimate == 0
 
-    # Must iCheck and tooltip after dynamic creation
+    @renderColumn($('#tasks-cards-todo'), toDo, true)
+    @renderColumn($('#tasks-cards-inprogress'), inProgress, false)
+    @renderColumn($('#tasks-cards-done'), done, false)
+
+    # Must tooltip after dynamic creation
     $("[data-toggle='tooltip']").tooltip({container: 'body'})
-#    $("input[type='checkbox'], input[type='radio']").iCheck({
-#        checkboxClass: 'icheckbox_minimal',
-#        radioClass: 'iradio_minimal'
-#    });
 
-  renderColumn: (column, tasks) ->
+    $('.card-clickable').on 'click', (e) =>
+      id = $(e.currentTarget).data('id')
+      @selectedTask = @model.getTask(id)
+      $('#taskModal').modal('show', e.currentTarget)
+      false
+
+  renderColumn: (column, tasks, deletable) ->
     tpl = $('#task-card-tpl').html()
     column.html('')
     for task in tasks
@@ -376,15 +412,25 @@ class TasksCardsView
       task_progress = Math.round(if task_total > 0 then task.work_logged * 100 / task_total else 0)
       delta_color = if task.delta < 0 then 'red' else 'green'
 
-      html = tpl.replace('%%id%%', task.id)
+      work = "estimate : #{Duration.stringify(task.original_estimate, {format: 'micro'})}, done : #{Duration.stringify(task.work_logged, {format: 'micro'})}, todo : #{Duration.stringify(task.remaining_estimate, {format: 'micro'})}"
+
+      html = tpl.replace('data-src', 'src')
+      html = html.replace( /%%id%%/g, task.id)
       html = html.replace('%%tags%%', value)
       html = html.replace('%%code%%', task.code)
       html = html.replace('%%name%%', task.name)
       html = html.replace('%%badge-description%%', badge_description)
       html = html.replace(/%%task-progress%%/g, task_progress)
       html = html.replace('%%delta-color%%', delta_color)
+      html = html.replace('%%work%%', work)
 
-      if task.assignee_id?
+      if deletable
+        html = html.replace('%%hide_cardcheck%%', '')
+      else
+        html = html.replace('%%hide_cardcheck%%', 'hide')
+
+
+      if task.assignee_id? and task.assignee_id > 0
         html = html.replace('%%hide_avatar%%', '')
         html = html.replace('%%user_id%%', task.assignee_id)
         html = html.replace('%%username%%', @model.findUsername(task.assignee_id))
@@ -392,8 +438,6 @@ class TasksCardsView
       else
         html = html.replace('%%user_id%%', 1)
         html = html.replace('%%hide_avatar%%', 'hide')
-
-
 
       column.append(html)
       $("#card-#{task.id}").find('i.task-description').attr('title', description)
@@ -433,17 +477,26 @@ class TasksCardsView
     $('#tab-sheet').hide()
 
     $('#show-sheet').on 'click', ->
-      $('#tab-sheet').show()
-      $('#tab-cards').hide()
-      $('#show-cards').toggleClass('active')
-      $('#show-cards').removeClass('btn-primary')
-      $('#show-cards').addClass('btn-default')
-      $('#show-sheet').toggleClass('active')
-      $('#show-sheet').removeClass('btn-default')
-      $('#show-sheet').addClass('btn-primary')
-      Tasks.currentView().render()
+      Tasks.showGridView()
 
     $('#show-cards').on 'click', ->
+      Tasks.showCardsView()
+
+
+  showGridView: ->
+    $('#tab-sheet').show()
+    $('#tab-cards').hide()
+    $('#show-cards').toggleClass('active')
+    $('#show-cards').removeClass('btn-primary')
+    $('#show-cards').addClass('btn-default')
+    $('#show-sheet').toggleClass('active')
+    $('#show-sheet').removeClass('btn-default')
+    $('#show-sheet').addClass('btn-primary')
+    $('#display_completed').removeClass('hide')
+    Tasks.currentView().render()
+    Tasks.updateSummary()
+
+  showCardsView: ->
       $('#tab-cards').show()
       $('#tab-sheet').hide()
       $('#show-cards').toggleClass('active')
@@ -452,7 +505,9 @@ class TasksCardsView
       $('#show-sheet').toggleClass('active')
       $('#show-sheet').removeClass('btn-primary')
       $('#show-sheet').addClass('btn-default')
+      $('#display_completed').addClass('hide')
       Tasks.currentView().render()
+      Tasks.updateSummary()
 
   initButtons: ->
     $("#btn-add-task").on "click", ->
@@ -466,7 +521,6 @@ class TasksCardsView
 
   initFilter: ->
     $('#tasksFilter').on 'keyup', (e) ->
-      Tasks.model.filter = $('#tasksFilter').val()
       Tasks.model.loadTasks()
 
     $('#display_completed').on 'click', (e) ->
@@ -474,7 +528,6 @@ class TasksCardsView
       tooltip = if $('#display_completed').hasClass('active') then 'hide' else 'show'
       tooltip += ' completed tasks'
       $('#display_completed').attr('data-original-title', tooltip)
-      Tasks.model.displayCompleted = $('#display_completed').hasClass('active')
       Tasks.model.loadTasks()
 
   onUpdate: =>
@@ -486,18 +539,21 @@ class TasksCardsView
     else
       Tasks.cardsView
 
-  deleteTasks: ->
+  deleteTasks: =>
     Tasks.currentView().deleteTasks()
 
   initTaskDialog: ->
     if !gon.can_update_tasks
-      $('#task-name').prop("readonly",true)
-      $('#task-notes').prop("readonly",true)
-      $('#task-original').prop("readonly",true)
-      $('#task-remaining').prop("readonly",true)
+      $('#task-name').prop("readonly", true)
+      $('#task-tags').prop("readonly", true)
+      $('#task-notes').prop("readonly", true)
+      $('#task-original').prop("readonly", true)
+      $('#task-remaining').prop("readonly", true)
       if !gon.can_take_unassigned_task
-        $('#task-assigned').prop("disabled",true)
+        $('#task-assigned').prop("disabled", true)
         $('#task-notes-save').hide()
+     
+    $("#task-tags").select2({tags:[], tokenSeparators: [",", " "]})
       
     $('#taskModal').on 'show.bs.modal', (e) ->
       tab = $(e.relatedTarget).data('tab')
@@ -544,6 +600,8 @@ class TasksCardsView
       $('#task-name').val(task.name)
       $('#task-notes').val(task.description)
 
+      $('#task-tags').select2('val', task.tag_list.split(','))
+
       original = task.original_estimate
       $('#task-original').val(Duration.stringify(original, {format: 'micro'}))
 
@@ -577,6 +635,7 @@ class TasksCardsView
     if gon.can_update_tasks
       item.name        = $('#task-name').val()
       item.description = $('#task-notes').val()
+      item.tag_list    = $('#task-tags').select2('val').join(',')
       item.original_estimate =  Duration.parse($('#task-original').val())
       item.remaining_estimate = Duration.parse($('#task-remaining').val())
       item.delta = item.original_estimate - (item.work_logged + item.remaining_estimate)
@@ -598,7 +657,7 @@ class TasksCardsView
 
 
   updateSummary: ->
-    items = Tasks.model.getTasks()
+    items = Tasks.currentView().getTasks()
     estimate = 0
     logged = 0
     remaining = 0
@@ -616,8 +675,8 @@ class TasksCardsView
     delta     = Duration.stringify(delta, {format: 'micro'}) if delta != 0
 
     tasks_count = '' + items.length
-    if items.length != Tasks.model.tasks_total
-      tasks_count += '<small>/' + Tasks.model.tasks_total + "</small>"
+    if items.length != Tasks.model.getTasksTotal()
+      tasks_count += '<small>/' + Tasks.model.getTasksTotal() + "</small>"
 
     $("#tasks_count").html(tasks_count)
     $("#tasks_estimate").html(estimate)

@@ -44,7 +44,7 @@
               .form-group
                 input#tasksFilter.form-control placeholder="Search..."
                 | &nbsp;
-                button#display_completed.btn.btn-default type="button" title='Show completed tasks' data-toggle='tooltip'
+                button#display_completed.btn.btn-default.hide type="button" title='Show completed tasks' data-toggle='tooltip'
                   span class="fa fa-check"
     .row
       .col-sm-12
@@ -54,17 +54,17 @@
         #tab-cards
           .row
             .col-md-4
-              .box.box-solid.bg-blue
+              .box
                 .box-header
                   h3.box-title To Do
                 #tasks-cards-todo.box-body
             .col-md-4
-              .box.box-solid.bg-yellow
+              .box
                 .box-header
                   h3.box-title In Progress
                 #tasks-cards-inprogress.box-body
             .col-md-4
-              .box.box-solid.bg-green
+              .box
                 .box-header
                   h3.box-title Done
                 #tasks-cards-done.box-body
