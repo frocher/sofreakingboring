@@ -25,9 +25,9 @@ class TasksModel
   getTasksTotal: ->
     @tasks.length
 
-  getTasks: (filter = '', displayCompleted = true, sort = '') ->
+  getTasks: (filter = '', displayCompleted = true, sort = '', order = 'asc') ->
     tasks = @filterTasks(@tasks, filter, displayCompleted)
-    tasks = @sortTasks(tasks, sort) if sort.length > 0
+    tasks = @sortTasks(tasks, sort, order) if sort.length > 0
     tasks
 
   createTask: =>
@@ -106,10 +106,11 @@ class TasksModel
 
     data
 
-  sortTasks: (tasks, key) ->
+  sortTasks: (tasks, key, order) ->
     tasks.sort (a,b) ->
-      return -1 if a[key] < b[key]
-      return +1 if a[key] > b[key]
+      m = if order == 'asc' then 1 else -1
+      return -1 * m if  a[key] < b[key]
+      return +1 * m if a[key] > b[key]
       return 0
 
   loadMembers: (callback) ->
@@ -369,7 +370,6 @@ class TasksCardsView
     # nothing to do here
 
   deleteTasks: ->
-
     selectedTasks = $('.card-check:checked')
     if selectedTasks.length > 0
       if confirm('Task(s) will be deleted. Are you sure ?')
@@ -382,8 +382,9 @@ class TasksCardsView
 
   getTasks: ->
     filter = $('#tasksFilter').val()
-    sort = $('#tasksSort').val()
-    @model.getTasks(filter, true, sort)
+    sort   = $('#tasksSort').val()
+    order  = $('#tasksSort').find('option:selected').data('order')
+    @model.getTasks(filter, true, sort, order)
 
   render: ->
     tasks = @getTasks()
