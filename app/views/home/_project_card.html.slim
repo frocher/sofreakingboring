@@ -1,4 +1,5 @@
-.thumbnail
+.thumbnail.project-card
+  = render partial: "projects/progress", locals: {project: project}
   = link_to project_path(project) do
     - if project.attachment?
       = image_tag project.attachment.url(:medium), title: project.description, data: {toggle:'tooltip'}
@@ -13,6 +14,5 @@
           = project.code
           | )
    
-    = render partial: "projects/progress", locals: {project: project}
     - project.project_members.by_name.each do |member|
       = image_tag avatar_icon(member.user.email, 38), size:'38', title: member.name, style:'margin:1px', data: {toggle:'tooltip'} 

@@ -94,6 +94,24 @@ i.task-note {
   vertical-align: middle;
 }
 
+.project-card {
+  .progress {
+    margin-left: -5px;
+    margin-right: -5px;
+    margin-top: -5px;
+    margin-bottom: 5px;
+    height: 4px;
+  }
+
+  .caption {
+    h3 {
+      margin-top: 0;
+    }
+  }
+}
+
+
+
 #tasksFilter {
   width:300px;
 }
