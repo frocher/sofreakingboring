@@ -44,6 +44,14 @@
               .form-group
                 input#tasksFilter.form-control placeholder="Search..."
                 | &nbsp;
+                select#tasksSort.form-control
+                  option value="updated_at" Sort by update time
+                  option value="created_at" Sort by creation time
+                  option value="name" Sort by name
+                  option value="original_estimate" Sort by estimate
+                  option value="remaining_estimate" Sort by remaining
+
+                | &nbsp;
                 button#display_completed.btn.btn-default.hide type="button" title='Show completed tasks' data-toggle='tooltip'
                   span class="fa fa-check"
     .row

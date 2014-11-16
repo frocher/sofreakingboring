@@ -25,8 +25,10 @@ class TasksModel
   getTasksTotal: ->
     @tasks.length
 
-  getTasks: (filter = '', displayCompleted = true) ->
-    @filterTasks(@tasks, filter, displayCompleted)
+  getTasks: (filter = '', displayCompleted = true, sort = '') ->
+    tasks = @filterTasks(@tasks, filter, displayCompleted)
+    tasks = @sortTasks(tasks, sort) if sort.length > 0
+    tasks
 
   createTask: =>
     task = {name: "New task", original_estimate: 0}
@@ -51,6 +53,7 @@ class TasksModel
     task.remaining_estimate = item.remaining_estimate
     task.delta = item.delta
     Api.update_task gon.project_id, item.id, item, (task) =>
+      @getTask(task.id).updated_at = task.updated_at
       @notify()
 
   removeTask: (item) ->
@@ -102,6 +105,12 @@ class TasksModel
       data = filtered
 
     data
+
+  sortTasks: (tasks, key) ->
+    tasks.sort (a,b) ->
+      return -1 if a[key] < b[key]
+      return +1 if a[key] > b[key]
+      return 0
 
   loadMembers: (callback) ->
     Api.project_members gon.project_id, (members) =>
@@ -350,7 +359,8 @@ class TasksCardsView
     @selectedTask = null
 
   initialize: ->
-    # nothing to do here
+    $('#tasksSort').change =>
+      @render()
 
   getSelectedTask: ->
     @selectedTask
@@ -372,7 +382,8 @@ class TasksCardsView
 
   getTasks: ->
     filter = $('#tasksFilter').val()
-    @model.getTasks(filter)
+    sort = $('#tasksSort').val()
+    @model.getTasks(filter, true, sort)
 
   render: ->
     tasks = @getTasks()
@@ -492,6 +503,7 @@ class TasksCardsView
     $('#show-sheet').toggleClass('active')
     $('#show-sheet').removeClass('btn-default')
     $('#show-sheet').addClass('btn-primary')
+    $('#tasksSort').addClass('hide')
     $('#display_completed').removeClass('hide')
     Tasks.currentView().render()
     Tasks.updateSummary()
@@ -505,6 +517,7 @@ class TasksCardsView
       $('#show-sheet').toggleClass('active')
       $('#show-sheet').removeClass('btn-primary')
       $('#show-sheet').addClass('btn-default')
+      $('#tasksSort').removeClass('hide')
       $('#display_completed').addClass('hide')
       Tasks.currentView().render()
       Tasks.updateSummary()
