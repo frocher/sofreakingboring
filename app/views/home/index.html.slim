@@ -47,7 +47,7 @@
         .row
           - @recent_openings.each do |opening|
             .col-sm-6.col-md-4
-              = render partial: "project_card", locals: {project: opening.project}
+              = render partial: "projects/project_card", locals: {project: opening.project}
   .col-lg-6
     .box.box-solid.box-info
       .box-header

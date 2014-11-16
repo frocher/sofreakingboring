@@ -4,39 +4,4 @@
     =link_to "Add a new project", new_project_path, class: "btn btn-primary btn-block"
 
   .col-sm-10
-    .box
-      .box-body.table-responsive.no-padding
-        table#projects.table.table-hover
-          thead
-            tr role="row"
-              th
-              th Code
-              th Name
-              th Created at
-              th Role
-              th State
-              th Progress
-              th Actions
-          tbody
-            - @projects.each do |project|
-              tr 
-                td style="width:54px"
-                  - if project.attachment?
-                    = image_tag project.attachment.url(:small_thumb), class: "img-rounded"
-                td =link_to project.code, project_path(project)
-                td =project.name
-                td =project.created_at.strftime('%Y-%m-%d')
-                td =user_role(project)
-                td =project.state
-                td
-                  = render partial: "projects/progress", locals: {project: project}
-                td
-                  - if can?(current_user, :update_project, project)
-                    =link_to edit_project_path(project), class: "btn btn-primary btn-sm", title: "Edit project"
-                      i class="sign fa fa-pencil"
-                    | &nbsp;
-                  - if can?(current_user, :delete_project, project)
-                    =link_to project_path(project), data: { confirm: "Project will be removed. Are you sure?"}, method: :delete, class: "btn btn-danger btn-sm", title: "Delete project"
-                      i class="sign fa fa-trash-o bg-red"
-      .box-footer.clearfix
-        =paginate @projects
+    =render partial: "projects_grid"
