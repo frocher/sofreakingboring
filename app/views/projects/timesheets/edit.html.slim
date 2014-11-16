@@ -28,8 +28,8 @@
               = options_for_select(@project.project_members.by_name.collect {|m| [m.username, m.user.id]}, current_user.id)
           | &nbsp;
           .form-group
-            label for="display_completed" Display completed tasks : 
-            input#display_completed type="checkbox"
+            button#display_completed.btn.btn-default type="button" title='Show completed tasks' data-toggle='tooltip'
+              span class="fa fa-check"
   .col-sm-8
 .row
   .col-sm-12

@@ -5,7 +5,8 @@
     Timesheet.initPeriod()
     $('#members').change ->
       Timesheet.loadGridData()
-    $('#display_completed').on 'ifChanged', (e) ->
+    $('#display_completed').on 'click', (e) ->
+      $('#display_completed').toggleClass('active')
       Timesheet.filterData()
 
   initDeltas: (tasks) ->
@@ -24,11 +25,10 @@
 
   filterData: ->
     data = Timesheet.tasks
-    if !$('#display_completed').prop("checked")
+    if !$('#display_completed').hasClass('active')
       filtered = []
       for task in data
-        if task.remaining_estimate > 0 or task.original_estimate == 0
-          filtered.push(task)
+        filtered.push(task) if task.remaining_estimate > 0 or task.original_estimate == 0
       data = filtered
 
     handsontable = $('#timesheetGrid').data('handsontable')
