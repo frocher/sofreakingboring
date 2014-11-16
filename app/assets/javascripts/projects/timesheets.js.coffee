@@ -5,6 +5,8 @@
     Timesheet.initPeriod()
     $('#members').change ->
       Timesheet.loadGridData()
+    $('#filter').on 'keyup', (e) ->
+      Timesheet.filterData()
     $('#display_completed').on 'click', (e) ->
       $('#display_completed').toggleClass('active')
       Timesheet.filterData()
@@ -25,6 +27,20 @@
 
   filterData: ->
     data = Timesheet.tasks
+
+    filter = $('#filter').val()
+    if filter.length > 0
+      filtered = []
+      for task in data
+        addIt = task.code.indexOf(filter) > -1
+
+        if !addIt
+          addIt = task.name.indexOf(filter) > -1
+
+        filtered.push(task) if addIt
+
+      data = filtered
+
     if !$('#display_completed').hasClass('active')
       filtered = []
       for task in data

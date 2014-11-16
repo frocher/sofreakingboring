@@ -9,7 +9,10 @@
       .box-body
         form.form-inline
           .form-group
-            label for="periodInput" Period : 
+            select#members.form-control title='Select member' data-toggle='tooltip'
+              = options_for_select(@project.project_members.by_name.collect {|m| [m.username, m.user.id]}, current_user.id)
+          .form-group
+            | &nbsp;
             .input-group
               input#periodInput.form-control name="period" readonly="readonly" value=(format_period(@period_start, @period_end)) style="width:200px"
               span.input-group-btn
@@ -22,10 +25,7 @@
                 button.btn.btn-default.btn-flat type="button" title="Choose"
                   i.fa.fa-caret-down
           | &nbsp;
-          .form-group
-            label for="members" Member : 
-            select#members.form-control
-              = options_for_select(@project.project_members.by_name.collect {|m| [m.username, m.user.id]}, current_user.id)
+          input#filter.form-control placeholder="Search..."
           | &nbsp;
           .form-group
             button#display_completed.btn.btn-default type="button" title='Show completed tasks' data-toggle='tooltip'
