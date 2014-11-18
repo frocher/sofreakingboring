@@ -4,7 +4,7 @@
     Members.initSelectRole()
 
   userFormatResult: (user, container, query) ->
-    "<img class='avatar' src='#{user.avatar_url}'>
+    "<img class='avatar' src='#{user.avatar_url}' width='40' height='40'>
     #{user.name}"
   userFormatSelection: (user, container) -> user.name
 
