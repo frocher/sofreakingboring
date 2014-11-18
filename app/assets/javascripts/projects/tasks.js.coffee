@@ -13,7 +13,7 @@ class TasksModel
   unsubscribe: (callback) ->
     @subscribers = @subscribers.filter (item) -> item isnt callback
 
-  notify: () ->
+  notify: ->
     subscriber() for subscriber in @subscribers
 
   loadTasks: ->

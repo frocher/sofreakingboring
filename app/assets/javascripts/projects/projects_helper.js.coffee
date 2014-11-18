@@ -1,3 +1,13 @@
+$ ->
+  $('.js-choose-project-picture-button').bind "click", ->
+    form = $(this).closest("form")
+    form.find(".js-project-picture-input").click()
+
+  $('.js-project-picture-input').bind "change", ->
+    form = $(this).closest("form")
+    filename = $(this).val().replace(/^.*[\\\/]/, '')
+    form.find(".js-picture-filename").text(filename)
+
 @ProjectsHelper=
 
   getTagColor: (tag) ->

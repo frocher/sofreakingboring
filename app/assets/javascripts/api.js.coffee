@@ -1,6 +1,7 @@
 @Api =
   users_path:             "/api/:version/users.json"
   user_path:              "/api/:version/users/:id.json"
+  projects_path:          "/api/:version/projects.json"
   project_members_path:   "/api/:version/projects/:project_id/members.json"
   project_snapshots_path: "/api/:version/projects/:project_id/snapshots.json"
   tasks_path:             "/api/:version/projects/:project_id/tasks.json"
@@ -37,6 +38,20 @@
       dataType: "json"
     ).done (users) ->
       callback(users)
+
+  # Return user projects list.
+  projects: (callback) ->
+    url = Api.buildUrl(Api.projects_path)
+
+    $.ajax(
+      url: url
+      data:
+        private_token: gon.api_token
+        per_page: 2000
+      dataType: "json"
+    ).done (projects) ->
+      callback(projects)
+
 
   project_members: (project_id, callback) ->
     url = Api.buildUrl(Api.project_members_path)

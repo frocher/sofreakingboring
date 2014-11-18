@@ -3,7 +3,7 @@ $ ->
 
 class Dispatcher
 
-  constructor: () ->
+  constructor: ->
     @initFlash()
     @initPageScripts()
 
@@ -16,6 +16,8 @@ class Dispatcher
     switch page
       when 'home:index'
         Home.init()
+      when 'projects'
+        Projects.init()
       when 'projects:show'
         ProjectDashboard.init()
       when 'projects:tasks:index'

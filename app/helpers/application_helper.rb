@@ -6,10 +6,11 @@ module ApplicationHelper
     user = User.find_by(email: user_email)
     if user && user.avatar.present?
       size = 40 if size.nil? || size <= 0
+      url = request.nil? ? '' : request.url
       if size <= 100
-        URI.join(request.url, user.avatar.url(:thumb))
+        URI.join(url, user.avatar.url(:thumb))
       else
-        URI.join(request.url, user.avatar.url(:medium))
+        URI.join(url, user.avatar.url(:medium))
       end
     else
       gravatar_icon(user_email, size)

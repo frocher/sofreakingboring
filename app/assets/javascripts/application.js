@@ -39,6 +39,7 @@
 //= require home
 //= require profiles
 //= require projects
+//= require project_dashboard
 //= require projects/projects_helper
 //= require projects/assignee_editor
 //= require projects/duration_editor
