@@ -13,7 +13,7 @@ class TasksModel
   unsubscribe: (callback) ->
     @subscribers = @subscribers.filter (item) -> item isnt callback
 
-  notify: () ->
+  notify: ->
     subscriber() for subscriber in @subscribers
 
   loadTasks: ->
@@ -47,7 +47,7 @@ class TasksModel
     task = @getTask(item.id)
     task.name = item.name
     task.description = item.description
-    task.tags = item.tags
+    task.tag_list = item.tag_list
     task.assignee_id = item.assignee_id
     task.original_estimate = item.original_estimate
     task.remaining_estimate = item.remaining_estimate
@@ -233,8 +233,8 @@ class TasksGridView
       afterChange: (changes, source) ->
         Tasks.updateSummary()
 
-        if source == 'loadData'
-          return
+        return if source != 'edit'
+
         for change in changes
           if change[1] != 'delta'
             instance = grid.handsontable('getInstance')
@@ -243,8 +243,9 @@ class TasksGridView
             else
               physicalIndex = change[0]
             item = instance.getDataAtRow(physicalIndex)
-            Api.update_task gon.project_id, item.id, item, (task) ->
-              # nothing to do here
+            if item?
+              Api.update_task gon.project_id, item.id, item, (task) ->
+                # nothing to do here
 
       cells: (row, col, prop) =>
         cellProperties = {}
