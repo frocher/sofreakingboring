@@ -220,7 +220,8 @@ class TasksGridView
           if change[1] == "original_estimate" and logged == 0 and remaining == original
             remaining = value
             data = hot.getData()
-            data[change[0]].remaining_estimate = remaining
+            physicalIndex = @getPhysicalIndex(change[0])
+            data[physicalIndex].remaining_estimate = remaining
 
           if change[1] == "original_estimate" or change[1] == "work_logged" or change[1] == "remaining_estimate"
             switch change[1]
@@ -230,18 +231,15 @@ class TasksGridView
 
             delta = original - (logged + remaining)
             hot.setDataAtRowProp(change[0], 'delta', delta)
-      afterChange: (changes, source) ->
+      afterChange: (changes, source) =>
         Tasks.updateSummary()
 
         return if source != 'edit'
 
         for change in changes
           if change[1] != 'delta'
+            physicalIndex = @getPhysicalIndex(change[0])
             instance = grid.handsontable('getInstance')
-            if instance.sortIndex.length > 0
-              physicalIndex = instance.sortIndex[change[0]][0]
-            else
-              physicalIndex = change[0]
             item = instance.getDataAtRow(physicalIndex)
             if item?
               Api.update_task gon.project_id, item.id, item, (task) ->
@@ -255,6 +253,11 @@ class TasksGridView
 
         return cellProperties
     })
+
+  getPhysicalIndex: (row) ->
+    instance = @getTable()
+    if instance.sortIndex.length > 0 then instance.sortIndex[row][0] else row
+
 
   codeRenderer: (instance, td, row, col, prop, value, cellProperties) ->
     escaped = "<a class='task-code' href='#taskModal' data-toggle='modal' data-tab='informations'>#{value}</a>"
@@ -311,7 +314,7 @@ class TasksGridView
   getSelectedTask: ->
     cells = @getTable().getSelected()
     if cells?
-      @model.getTaskAt(cells[0]) 
+      @getTaskAtRow(cells[0]) 
     else
       @saveSelected
 
