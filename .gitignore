@@ -10,6 +10,7 @@
 # Ignore specific config files
 /config/database.yml
 /config/olb.yml
+/config/newrelic.yml
 /config/puma.rb
 
 
