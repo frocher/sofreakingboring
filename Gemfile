@@ -89,5 +89,8 @@ end
 # Use puma as the app server
 gem 'puma'
 
+# Monitoring
+gem 'newrelic_rpm'
+
 gem 'annotate', "~> 2.6.5", group: :development
 
