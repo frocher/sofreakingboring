@@ -234,7 +234,7 @@ class TasksGridView
       afterChange: (changes, source) =>
         Tasks.updateSummary()
 
-        return if source != 'edit'
+        return if source != 'edit' and source != 'paste'
 
         for change in changes
           if change[1] != 'delta'
