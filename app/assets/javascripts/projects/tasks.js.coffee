@@ -393,11 +393,13 @@ class TasksCardsView
   render: ->
     tasks = @getTasks()
 
-    toDo       = tasks.filter (task) -> task.work_logged == 0
+    toDo       = tasks.filter (task) -> task.work_logged == 0 and (!task.assignee_id? or task.assignee_id <= 0)
+    assigned   = tasks.filter (task) -> task.work_logged == 0 and (task.assignee_id? and task.assignee_id > 0)
     inProgress = tasks.filter (task) -> task.work_logged > 0 and task.remaining_estimate > 0
     done       = tasks.filter (task) -> task.work_logged > 0 and task.remaining_estimate == 0
 
     @renderColumn($('#tasks-cards-todo'), toDo, true)
+    @renderColumn($('#tasks-cards-assigned'), assigned, true)
     @renderColumn($('#tasks-cards-inprogress'), inProgress, false)
     @renderColumn($('#tasks-cards-done'), done, false)
 
