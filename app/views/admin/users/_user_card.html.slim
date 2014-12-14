@@ -7,8 +7,8 @@
             i.fa.fa-info-circle.user-info title='click to flip me' data-toggle='tooltip' data-user_id='user-%%id%%'
             div style='text-align:center'
               img class='avatar' data-src='%%avatar_url%%' width='120' height='120'
-            div %%name%%
-            div %%email%%
+            .truncate title='%%name%%' data-toggle='tooltip' %%name%%
+            .truncate title='%%email%%' data-toggle='tooltip' %%email%%
             div
               span style="float:right"
                 a class="btn btn-primary btn-sm" href="/admin/users/%%id%%/edit" title="Edit user" data-toggle='tooltip'

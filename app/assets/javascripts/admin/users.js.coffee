@@ -76,8 +76,8 @@ class UsersCardsView
       html = html.replace('%%card-item%%', 'user-card')
       html = html.replace( /%%id%%/g, user.id)
       html = html.replace('%%avatar_url%%', user.avatar_url)
-      html = html.replace('%%name%%', user.name)
-      html = html.replace('%%email%%', user.email)
+      html = html.replace( /%%name%%/g, user.name)
+      html = html.replace( /%%email%%/g, user.email)
 
       html = html.replace('%%created%%', moment(user.created_at).fromNow())
       html = html.replace('%%last_login%%', moment(user.current_sign_in_at).fromNow())
