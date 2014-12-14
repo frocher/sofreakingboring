@@ -73,6 +73,7 @@ class UsersCardsView
     users = @getUsers()
     for user in users
       html = tpl.replace('data-src', 'src')
+      html = html.replace('%%card-item%%', 'user-card')
       html = html.replace( /%%id%%/g, user.id)
       html = html.replace('%%avatar_url%%', user.avatar_url)
       html = html.replace('%%name%%', user.name)
