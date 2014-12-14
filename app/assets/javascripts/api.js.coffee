@@ -25,7 +25,7 @@
 
   # Return users list. Filtered by query
   # Only active users retrieved
-  users: (query, callback) ->
+  users: (query, per_page, callback) ->
     url = Api.buildUrl(Api.users_path)
 
     $.ajax(
@@ -33,7 +33,7 @@
       data:
         private_token: gon.api_token
         search: query
-        per_page: 20
+        per_page: per_page
         active: true
       dataType: "json"
     ).done (users) ->

@@ -1,0 +1,27 @@
+#user-card-tpl.hide
+  .user-card
+    .inner
+      .front
+        .thumbnail.user-card id='user-%%id%%'
+          .card-body
+            i.fa.fa-info-circle.user-info title='click to flip me' data-toggle='tooltip' data-user_id='user-%%id%%'
+            div style='text-align:center'
+              img class='avatar' data-src='%%avatar_url%%' width='120' height='120'
+            div %%name%%
+            div %%email%%
+            div
+              span style="float:right"
+                a class="btn btn-primary btn-sm" href="/admin/users/%%id%%/edit" title="Edit user" data-toggle='tooltip'
+                  i class="fa fa-pencil"
+                | &nbsp;
+                a class="btn btn-danger btn-sm %%hide_delete%%" data-confirm="User will be removed. Are you sure?" data-method="delete" href="/admin/users/%%id%%" rel="nofollow" title="Delete user" data-toggle='tooltip'
+                  i class="fa fa-trash-o bg-red"
+      .back
+        .thumbnail.user-card id='user-%%id%%'
+          .card-body
+            ul
+              li created : %%created%%
+              li last login : %%last_login%%
+              li last IP : %%last_ip%%
+              li sign in count : %%sign_in_count%%
+        

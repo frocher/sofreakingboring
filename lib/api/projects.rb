@@ -10,7 +10,11 @@ module API
       # Example Request:
       #   GET /projects
       get do
-        @projects = paginate current_user.projects
+        if current_user.is_admin? && params[:admin]
+          @projects = paginate Project.all
+        else
+          @projects = paginate current_user.projects
+        end
         present @projects, with: Entities::Project
       end
 

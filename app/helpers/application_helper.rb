@@ -5,7 +5,7 @@ module ApplicationHelper
   def avatar_icon(user_email = '', size = nil)
     user = User.find_by(email: user_email)
     if user && user.avatar.present?
-      size = 40 if size.nil? || size <= 0
+      size = 120 if size.nil? || size <= 0
       tag = size <= 100 ? :thumb : :medium
       if request.nil?
         user.avatar.url(tag)
@@ -18,7 +18,7 @@ module ApplicationHelper
   end
 
   def gravatar_icon(user_email = '', size = nil)
-    size = 40 if size.nil? || size <= 0
+    size = 120 if size.nil? || size <= 0
 
     if !Olb.config.gravatar.enabled || user_email.blank?
       URI.join(request.url, '/assets/no_avatar.png')

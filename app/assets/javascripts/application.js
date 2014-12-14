@@ -17,6 +17,7 @@
 //= require bootstrap
 //= require select2
 //= require admin_lte
+//= require jquery.flip
 //= require jquery.handsontable.full
 //= require jquery.knob
 //= require jquery.flot.min
@@ -37,6 +38,7 @@
 //= require api
 //= require dispatcher
 //= require home
+//= require admin/users
 //= require profiles
 //= require projects
 //= require project_dashboard

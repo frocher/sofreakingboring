@@ -128,6 +128,20 @@ i.task-note {
   vertical-align: middle;
 }
 
+.user-card {
+  float: left;
+  margin: 2px;
+  width: 160px;
+  height: 206px;
+  overflow: ellipsis;
+}
+
+.user-info {
+  display: block;
+  float: right;
+  cursor: pointer;
+}
+
 .card {
   position: relative;
   background: #fff;
@@ -152,6 +166,10 @@ i.task-note {
 .card-body {
   padding: 6px;
   color: #444;
+
+  ul {
+    padding-left: 18px;
+  }
 
   .card-code {
     font-size: 16px;

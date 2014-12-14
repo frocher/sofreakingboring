@@ -3,6 +3,12 @@ module API
   class Users < Grape::API
     before { authenticate! }
 
+    helpers do       
+      def entity
+        current_user.is_admin? ? Entities::AdminUser : Entities::User
+      end
+    end
+
     resource :users do
       # Get a users list
       #
@@ -12,7 +18,7 @@ module API
         @users = User.all
         @users = @users.search(params[:search]) if params[:search].present?
         @users = paginate @users
-        present @users, with: Entities::User
+        present @users, with: entity
       end
 
       # Get a single user
@@ -23,7 +29,7 @@ module API
       #   GET /users/:id
       get ":id" do
         @user = User.find(params[:id])
-        present @user, with: Entities::User
+        present @user, with: entity
       end
     end
   end

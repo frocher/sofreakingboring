@@ -14,6 +14,8 @@ class Dispatcher
       return false
 
     switch page
+      when 'admin:users:index'
+        AdminUsers.init()
       when 'home:index'
         Home.init()
       when 'projects'

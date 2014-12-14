@@ -5,37 +5,17 @@
 
   .col-sm-10
     .box
-      .box-body.table-responsive.no-padding
-        table.table.table-hover
-          thead
-            tr rologinle="row"
-              th User
-              th Email
-              th Last login
-              th Login count
-              th Status
-              th Actions
-          tbody
-            - @users.each do |user|
-              tr
-                td
-                  = image_tag avatar_icon(user.email, 48), size: "48x48"
-                  | &nbsp;
-                  =user.name
-                td =user.email
-                td =user.current_sign_in_at.to_s + ' (' + user.current_sign_in_ip + ')'
-                td =user.sign_in_count
-                td
-                  .tags
-                    - user_tags(user).each do |tag|
-                      span.label.label-info =tag
-                      | &nbsp;
-                td
-                  =link_to edit_admin_user_path(user), class: "btn btn-primary btn-sm", title: "Edit user"
-                    i class="sign fa fa-pencil"
-                  | &nbsp;
-                  - unless user.admin?
-                    =link_to admin_user_path(user), data: { confirm: "User will be removed. Are you sure?"}, method: :delete, class: "btn btn-danger btn-sm", title: "Delete user"
-                      i class="sign fa fa-trash-o bg-red"
-      .box-footer.clearfix
-        =paginate @users
+      .box-body
+        form.navbar-form
+          .form-group
+            input#usersFilter.form-control placeholder="Search..."
+            | &nbsp;
+            select#usersSort.form-control
+              option value="name" data-order="asc" Sort by name
+              option value="email" data-order="asc" Sort by email
+              option value="created_at" data-order="desc" Sort by creation time
+              option value="sign_in_count" data-order="asc" Sort by login count
+              option value="current_sign_in_at" data-order="desc" Sort by login time
+    #users
+
+= render 'user_card'

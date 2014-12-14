@@ -6,6 +6,10 @@ module API
       expose :avatar_url
     end
 
+    class AdminUser < User
+      expose :current_sign_in_at, :sign_in_count, :current_sign_in_ip
+    end
+
     class Project < Grape::Entity
       expose :id, :code, :name, :description, :created_at
     end

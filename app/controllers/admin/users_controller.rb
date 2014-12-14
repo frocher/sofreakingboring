@@ -5,6 +5,7 @@ class Admin::UsersController < Admin::AdminController
   add_breadcrumb "Users", :admin_users_path
 
   def index
+    gon.user_id = current_user.id
     @users = User.order(:name).page(params[:page])
   end
 

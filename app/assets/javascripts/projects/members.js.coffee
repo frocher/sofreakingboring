@@ -15,7 +15,7 @@
       minimumInputLength: 2
       multiple: true
       query: (query) ->
-        Api.users query.term, (users) ->
+        Api.users query.term, 20, (users) ->
           data = 
             results: users
             text: 'name'
