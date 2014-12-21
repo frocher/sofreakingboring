@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.8'
+gem 'rails', '4.2.0'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
@@ -65,9 +65,8 @@ gem 'axlsx_rails'
 gem 'mousetrap-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
-gem 'grape'
-gem 'grape-entity'
+gem 'grape', "~> 0.6.1"
+gem 'grape-entity', "~> 0.4.2"
 gem 'gon'
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin]
