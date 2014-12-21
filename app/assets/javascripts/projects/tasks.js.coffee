@@ -130,11 +130,9 @@ class TasksModel
     if found.length > 0 then found[0].username else null
 
   canChangeAssignee: (task) ->
-    resu = true
+    resu = false
     logged = task.work_logged
-    if logged != 0
-      resu = true
-    else
+    if logged == 0
       if gon.can_take_unassigned_task && !gon.can_update_tasks
         resu = task.assignee_id == "" or task.assignee_id == null or parseInt(task.assignee_id) == gon.user_id
       else
@@ -694,7 +692,7 @@ class TasksCardsView
       $('#tasks_delta').addClass('bg-red')
     else if delta > 0
       $('#tasks_delta').addClass('bg-green')
-      
+
     estimate  = Duration.stringify(estimate, {format: 'micro'}) if estimate != 0
     remaining = Duration.stringify(remaining, {format: 'micro'}) if remaining != 0
     logged    = Duration.stringify(logged, {format: 'micro'}) if logged != 0
