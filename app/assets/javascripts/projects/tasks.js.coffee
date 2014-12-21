@@ -74,24 +74,25 @@ class TasksModel
   filterTasks: (tasks, filter = '', displayCompleted = true) ->
     data = tasks
     if filter.length > 0
+      filter = filter.toLowerCase()
       filtered = []
       for task in data
-        addIt = task.code.indexOf(filter) > -1
+        addIt = task.code.toLowerCase().indexOf(filter) > -1
 
         if !addIt
-          addIt = task.name.indexOf(filter) > -1
+          addIt = task.name.toLowerCase().indexOf(filter) > -1
 
         if !addIt
           tags = task.tag_list.split(',')
           for tag in tags
             tag = $.trim(tag)
-            if tag.indexOf(filter) > -1
+            if tag.toLowerCase().indexOf(filter) > -1
               addIt = true
               break
 
         if !addIt
           found = @members.where user_id:task.assignee_id
-          addIt = found.length > 0 && found[0].username.indexOf(filter) > -1
+          addIt = found.length > 0 && found[0].username.toLowerCase().indexOf(filter) > -1
 
         filtered.push(task) if addIt
 

@@ -30,12 +30,13 @@
 
     filter = $('#filter').val()
     if filter.length > 0
+      filter = filter.toLowerCase()
       filtered = []
       for task in data
-        addIt = task.code.indexOf(filter) > -1
+        addIt = task.code.toLowerCase().indexOf(filter) > -1
 
         if !addIt
-          addIt = task.name.indexOf(filter) > -1
+          addIt = task.name.toLowerCase().indexOf(filter) > -1
 
         filtered.push(task) if addIt
 

@@ -20,12 +20,13 @@ class UsersModel
   filterUsers: (users, filter = '') ->
     data = users
     if filter.length > 0
+      filter = filter.toLowerCase()
       filtered = []
       for user in data
-        addIt = user.email.indexOf(filter) > -1
+        addIt = user.email.toLowerCase().indexOf(filter) > -1
 
         if !addIt
-          addIt = user.name.indexOf(filter) > -1
+          addIt = user.name.toLowerCase().indexOf(filter) > -1
 
         filtered.push(user) if addIt
 
