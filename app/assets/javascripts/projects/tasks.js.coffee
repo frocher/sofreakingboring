@@ -689,6 +689,12 @@ class TasksCardsView
       remaining += parseInt(item.remaining_estimate)
       delta     += parseInt(item.delta)
 
+    $('#tasks_delta').removeClass('bg-red bg-green')
+    if delta < 0
+      $('#tasks_delta').addClass('bg-red')
+    else if delta > 0
+      $('#tasks_delta').addClass('bg-green')
+      
     estimate  = Duration.stringify(estimate, {format: 'micro'}) if estimate != 0
     remaining = Duration.stringify(remaining, {format: 'micro'}) if remaining != 0
     logged    = Duration.stringify(logged, {format: 'micro'}) if logged != 0
@@ -704,8 +710,4 @@ class TasksCardsView
     $("#tasks_remaining").html(remaining)
     $("#tasks_delta").html(delta)
 
-    $('#tasks_delta').removeClass('bg-red bg-green')
-    if delta < 0
-      $('#tasks_delta').addClass('bg-red')
-    else if delta > 0
-      $('#tasks_delta').addClass('bg-green')
+
