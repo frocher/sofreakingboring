@@ -36,14 +36,14 @@ gem 'kaminari'
 gem 'slim'
 
 # breadcrumbs on pages
-gem "breadcrumbs_on_rails"
+gem 'breadcrumbs_on_rails'
 
 # tags on tasks
 gem 'acts-as-taggable-on'
 
 # Files attachments
-gem "paperclip"
-gem "paperclip-meta"
+gem 'paperclip'
+gem 'paperclip-meta'
 
 # Versioning
 gem 'paper_trail', '~> 3.0.5'
@@ -65,8 +65,8 @@ gem 'axlsx_rails'
 gem 'mousetrap-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'grape', "~> 0.6.1"
-gem 'grape-entity', "~> 0.4.2"
+gem 'grape', '~> 0.6.1'
+gem 'grape-entity', '~> 0.4.2'
 gem 'gon'
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin]
@@ -91,5 +91,5 @@ gem 'puma'
 # Monitoring
 gem 'newrelic_rpm'
 
-gem 'annotate', "~> 2.6.5", group: :development
+gem 'annotate', '~> 2.6.5', group: :development
 
