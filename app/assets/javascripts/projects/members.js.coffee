@@ -33,16 +33,5 @@
       escapeMarkup: (m) -> m
 
     $('.role-select').on 'change', ->
-      canSubmit = false
-
-      roles = $('.role-select')
-      for role in roles
-        if role.value == 'admin'
-          canSubmit = true
-          break
-
-      if canSubmit
-        $(this.form).submit() 
-      else
-        alert('Role not updated. A project needs to have at least one admin')
+      $(this.form).submit() 
       

@@ -59,8 +59,22 @@ class Projects::MembersController < Projects::ItemsController
   def update
     return render_404 unless can?(current_user, :update_project_member, @project)
     member = ProjectMember.find(params[:id])
-    if member.update_attributes(member_params)
-      flash[:notice] = "Member role was successfully updated"
+
+
+    project = member.project
+    canUpdate = false
+    project.project_members.each do |current|
+      if current.id != member.id && current.role == "admin"
+        canUpdate = true
+      end
+    end
+
+    if canUpdate
+      if member.update_attributes(member_params)
+        flash[:notice] = "Member role was successfully updated"
+      end
+    else
+      flash[:alert] = "Member role was not updated. A project must have at least one admin"
     end
     redirect_to project_members_path
   end
