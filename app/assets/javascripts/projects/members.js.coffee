@@ -10,8 +10,8 @@
 
 
   initSelectRole: ->
-    $("#user-search").select2
-      placeholder: "Type a username"
+    $('#user-search').select2
+      placeholder: 'Type a username'
       minimumInputLength: 2
       multiple: true
       query: (query) ->
@@ -29,8 +29,20 @@
         ) for id in ids
       formatResult: Members.userFormatResult
       formatSelection: Members.userFormatSelection
-      dropdownCssClass: "bigdrop"
+      dropdownCssClass: 'bigdrop'
       escapeMarkup: (m) -> m
 
-    $(".role-select").on "change", ->
-      $(this.form).submit()
+    $('.role-select').on 'change', ->
+      canSubmit = false
+
+      roles = $('.role-select')
+      for role in roles
+        if role.value == 'admin'
+          canSubmit = true
+          break
+
+      if canSubmit
+        $(this.form).submit() 
+      else
+        alert('Role not updated. A project needs to have at least one admin')
+      
