@@ -11,7 +11,9 @@
 #  assignee_id        :integer
 #  created_at         :datetime
 #  updated_at         :datetime
+#  iid                :integer
 #
+
 class Task < ActiveRecord::Base
   include InternalId
 
