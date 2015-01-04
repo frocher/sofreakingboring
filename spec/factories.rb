@@ -14,6 +14,7 @@ FactoryGirl.define do
   end
 
   factory :project do
+    state "opened"
     sequence(:code) { |n| "#{Faker::Lorem.characters(6)}#{n}" }
     sequence(:name) { |n| "#{Faker::Lorem.sentence}#{n}" }
   end
@@ -21,7 +22,7 @@ FactoryGirl.define do
   factory :project_opening do
     project
     user
-    sequence(:touched) { |n| "#{Faker::Number.number(10)}#{n}" }
+    sequence(:touched) { |n| "#{Faker::Number.number(3)}#{n}" }
   end
 
 
@@ -30,15 +31,16 @@ FactoryGirl.define do
     assignee
 
     sequence(:name) { |n| "#{Faker::Lorem.characters(8)}#{n}" }
-    sequence(:original_estimate) { |n| "#{Faker::Number.number(10)}#{n}" }
-    sequence(:remaining_estimate) { |n| "#{Faker::Number.number(10)}#{n}" }
+    sequence(:original_estimate) { |n| "#{Faker::Number.number(6)}#{n}" }
+    sequence(:remaining_estimate) { |n| "#{Faker::Number.number(6)}#{n}" }
   end
+
 
   factory :work_log do
     task
 
     day '20141010'
-    sequence(:worked) { |n| "#{Faker::Number.number(10)}#{n}" }
+    sequence(:worked) { |n| "#{Faker::Number.number(6)}#{n}" }
   end
 
 end
