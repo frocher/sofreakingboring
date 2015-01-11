@@ -11,7 +11,7 @@ module API
     end
 
     class Project < Grape::Entity
-      expose :id, :code, :name, :description, :picture_url, :created_at, :original_estimate, :work_logged, :remaining_estimate, :delta
+      expose :id, :code, :name, :description, :state, :picture_url, :created_at, :original_estimate, :work_logged, :remaining_estimate, :delta
     end
 
     class ProjectMember < Grape::Entity

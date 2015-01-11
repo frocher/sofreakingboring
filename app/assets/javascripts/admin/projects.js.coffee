@@ -12,12 +12,12 @@ class ProjectsModel
   notify: ->
     subscriber() for subscriber in @subscribers
 
-  getProjects: (filter = '', sort = '', order = 'asc') ->
-    projects = @filterProjects(@projects, filter)
+  getProjects: (filter = '', sort = '', order = 'asc', displayClosed = false) ->
+    projects = @filterProjects(@projects, filter, displayClosed)
     projects = @sortProjects(projects, sort, order) if sort.length > 0
     projects
 
-  filterProjects: (projects, filter = '') ->
+  filterProjects: (projects, filter = '', displayClosed = false) ->
     data = projects
     if filter.length > 0
       filter = filter.toLowerCase()
@@ -34,6 +34,12 @@ class ProjectsModel
 
       data = filtered
   
+    if !displayClosed
+      filtered = []
+      for project in data
+        filtered.push(project) if project.state != 'closed'
+      data = filtered
+
     data
 
   sortProjects: (projects, key, order) ->
@@ -60,14 +66,20 @@ class ProjectsCardsView
     $('#projectsFilter').on 'keyup', (e) =>
       @render()
 
+    $('#display_closed').on 'click', (e) =>
+      $('#display_closed').toggleClass('active')
+      @render()
+
   onUpdate: =>
     @render()
 
   getProjects: ->
-    filter = $('#projectsFilter').val()
-    sort   = $('#projectsSort').val()
-    order  = $('#projectsSort').find('option:selected').data('order')
-    @model.getProjects(filter, sort, order)
+    filter        = $('#projectsFilter').val()
+    sort          = $('#projectsSort').val()
+    order         = $('#projectsSort').find('option:selected').data('order')
+    displayClosed = $('#display_closed').hasClass('active')
+
+    @model.getProjects(filter, sort, order, displayClosed)
 
   render: ->
     tpl = $('#project-card-tpl').html()
