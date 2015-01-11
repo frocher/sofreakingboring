@@ -102,6 +102,7 @@ i.task-note {
 }
 
 .project-card {
+
   .progress {
     margin-left: -5px;
     margin-right: -5px;
@@ -117,7 +118,27 @@ i.task-note {
   }
 }
 
+.project-card-no-members {
+  float: left;
+  margin: 2px;
+  width: 200px;
+  height: 255px;  
+  overflow: hidden;
 
+  .progress {
+    margin-left: -5px;
+    margin-right: -5px;
+    margin-top: -5px;
+    margin-bottom: 5px;
+    height: 4px;
+  }
+}
+
+.project-info {
+  display: block;
+  float: right;
+  cursor: pointer;
+}
 
 #tasksFilter {
   width:300px;

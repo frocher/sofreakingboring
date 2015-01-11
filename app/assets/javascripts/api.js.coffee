@@ -40,14 +40,15 @@
       callback(users)
 
   # Return user projects list.
-  projects: (callback) ->
+  projects: (admin, per_page, callback) ->
     url = Api.buildUrl(Api.projects_path)
 
     $.ajax(
       url: url
       data:
         private_token: gon.api_token
-        per_page: 2000
+        admin: admin
+        per_page: per_page
       dataType: "json"
     ).done (projects) ->
       callback(projects)

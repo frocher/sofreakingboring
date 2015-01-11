@@ -38,6 +38,7 @@
 //= require api
 //= require dispatcher
 //= require home
+//= require admin/projects
 //= require admin/users
 //= require profiles
 //= require projects

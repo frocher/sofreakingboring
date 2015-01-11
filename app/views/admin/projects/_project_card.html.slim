@@ -1,0 +1,30 @@
+#project-card-tpl.hide
+  div class='%%card-item%%'
+    .inner
+      .front
+        .thumbnail.project-card-no-members id='project-%%id%%'
+          .progress.xs data-toggle="tooltip" data-original-title="%%progress%%%"
+            div class="progress-bar progress-bar-%%progress_color%%" style="width:%%progress%%%"
+          .card-body
+            i.fa.fa-info-circle.project-info title='click to flip me' data-toggle='tooltip' data-project_id='project-%%id%%'
+            div style='text-align:center'
+              img class='picture' data-src='%%picture_url%%' width='160' height='180' title='%%description%%' data-toggle='tooltip'
+            .truncate
+                a href='/projects/%%id%%' title='%%name%% (%%code%%)' data-toggle='tooltip' %%name%%
+            div
+              span style="float:right"
+                a class="btn btn-primary btn-sm" href="/projects/%%id%%/edit" title="Edit project" data-toggle='tooltip'
+                  i class="fa fa-pencil"
+                | &nbsp;
+                a class="btn btn-danger btn-sm" data-confirm="Project will be deleted. Are you sure?" data-method="delete" href="/projects/%%id%%" rel="nofollow" title="Delete project" data-toggle='tooltip'
+                  i class="fa fa-trash-o bg-red"
+      .back
+        .thumbnail.project-card-no-members id='project-%%id%%'
+          .card-body
+            ul
+              li created : %%created%%
+              li estimate : %%original_estimate%%
+              li logged : %%work_logged%%
+              li remaining : %%remaining_estimate%%
+              li delta : %%delta%%
+        

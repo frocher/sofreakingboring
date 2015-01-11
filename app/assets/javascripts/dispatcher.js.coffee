@@ -16,6 +16,8 @@ class Dispatcher
     switch page
       when 'admin:users:index'
         AdminUsers.init()
+      when 'admin:projects:index'
+        AdminProjects.init()
       when 'home:index'
         Home.init()
       when 'projects'

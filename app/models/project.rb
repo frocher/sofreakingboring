@@ -53,11 +53,13 @@ class Project < ActiveRecord::Base
   #
   scope :opened, -> { where(state: "opened") }
 
+  def picture_url
+    attachment.url
+  end
 
   def original_estimate
     tasks.sum(:original_estimate)
   end
-
 
   def work_logged
     resu = 0
