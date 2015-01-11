@@ -16,6 +16,9 @@
               option value="remaining_estimate" data-order="asc" Sort by remaining estimate
               option value="work_logged" data-order="asc" Sort by work_logged
               option value="created_at" data-order="desc" Sort by creation time
+    #loadingSpinner
+      i.fa.fa-cog.fa-spin
+      | &nbsp;loading...
     #projects
 
 = render 'project_card'

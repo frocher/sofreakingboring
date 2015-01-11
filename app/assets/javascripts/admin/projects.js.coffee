@@ -126,5 +126,6 @@ class ProjectsCardsView
     @model  = new ProjectsModel()
     @cardsView = new ProjectsCardsView(@model)
     @model.loadProjects( -> 
+      $("#loadingSpinner").hide()
       AdminProjects.cardsView.initialize()
     )
