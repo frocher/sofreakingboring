@@ -102,6 +102,7 @@ class UsersCardsView
   init: ->
     @model  = new UsersModel()
     @cardsView = new UsersCardsView(@model)
-    @model.loadUsers( -> 
+    @model.loadUsers( ->
+      $("#loadingSpinner").hide()
       AdminUsers.cardsView.initialize()
     )
