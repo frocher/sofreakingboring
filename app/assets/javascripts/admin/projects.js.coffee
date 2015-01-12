@@ -102,6 +102,7 @@ class ProjectsCardsView
       html = html.replace( /%%description%%/g, project.description)
 
       html = html.replace('%%created%%', moment(project.created_at).fromNow())
+      html = html.replace('%%state%%', project.state)
       html = html.replace('%%original_estimate%%', Duration.stringify(project.original_estimate, {format: 'micro'}))
       html = html.replace('%%remaining_estimate%%', Duration.stringify(project.remaining_estimate, {format: 'micro'}))
       html = html.replace('%%work_logged%%', Duration.stringify(project.work_logged, {format: 'micro'}))
@@ -130,7 +131,11 @@ class ProjectsCardsView
     # Must tooltip after dynamic creation
     $("[data-toggle='tooltip']").tooltip({container: 'body'})
 
-    $(".project-card-no-members .inner").flip( {trigger: 'click'} );
+    $(".project-card-no-members .inner").flip( {trigger: 'manual'} );
+    $(".project-info.flip-on").on 'click', (e) ->
+      $(e.target).parents('.inner').flip(true)
+    $(".project-info.flip-off").on 'click', (e) ->
+      $(e.target).parents('.inner').flip(false)
 
 @AdminProjects=
   

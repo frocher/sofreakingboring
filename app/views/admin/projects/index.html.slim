@@ -19,9 +19,7 @@
             | &nbsp;
             button#display_closed.btn.btn-default type="button" title='Show closed projects' data-toggle='tooltip'
               span class="fa fa-check"
-    #loadingSpinner
-      i.fa.fa-cog.fa-spin
-      | &nbsp;loading...
+    = render '/shared/loading_spinner'
     #projects
 
 = render 'project_card'

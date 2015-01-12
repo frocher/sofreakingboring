@@ -6,7 +6,7 @@
           .progress.xs data-toggle="tooltip" data-original-title="%%progress%%%"
             div class="progress-bar progress-bar-%%progress_color%%" style="width:%%progress%%%"
           .card-body
-            i.fa.fa-info-circle.project-info title='click to flip me' data-toggle='tooltip' data-project_id='project-%%id%%'
+            i.fa.fa-info-circle.project-info.flip-on title='click to flip me' data-toggle='tooltip' data-project_id='project-%%id%%'
             div style='text-align:center'
               img class='picture' data-src='%%picture_url%%' width='160' height='180' title='%%description%%' data-toggle='tooltip'
             .truncate
@@ -21,7 +21,9 @@
       .back
         .thumbnail.project-card-no-members id='project-%%id%%'
           .card-body
+            i.fa.fa-info-circle.project-info.flip-off title='click to flip me' data-toggle='tooltip' data-project_id='project-%%id%%'
             ul
+              li state : %%state%%
               li created : %%created%%
               li estimate : %%original_estimate%%
               li logged : %%work_logged%%

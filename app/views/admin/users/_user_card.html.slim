@@ -4,7 +4,7 @@
       .front
         .thumbnail.user-card id='user-%%id%%'
           .card-body
-            i.fa.fa-info-circle.user-info title='click to flip me' data-toggle='tooltip' data-user_id='user-%%id%%'
+            i.fa.fa-info-circle.user-info.flip-on title='click to flip me' data-toggle='tooltip' data-user_id='user-%%id%%'
             div style='text-align:center'
               img class='avatar' data-src='%%avatar_url%%' width='120' height='120'
             .truncate title='%%name%%' data-toggle='tooltip' %%name%%
@@ -19,6 +19,7 @@
       .back
         .thumbnail.user-card id='user-%%id%%'
           .card-body
+            i.fa.fa-info-circle.user-info.flip-off title='click to flip me' data-toggle='tooltip' data-user_id='user-%%id%%'
             ul
               li created : %%created%%
               li last login : %%last_login%%

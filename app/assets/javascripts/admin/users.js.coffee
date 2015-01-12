@@ -95,7 +95,11 @@ class UsersCardsView
     # Must tooltip after dynamic creation
     $("[data-toggle='tooltip']").tooltip({container: 'body'})
 
-    $(".user-card .inner").flip( {trigger: 'click'} );
+    $(".user-card .inner").flip( {trigger: 'manual'} )
+    $(".user-info.flip-on").on 'click', (e) ->
+      $(e.target).parents('.inner').flip(true)
+    $(".user-info.flip-off").on 'click', (e) ->
+      $(e.target).parents('.inner').flip(false)
 
 @AdminUsers=
   
