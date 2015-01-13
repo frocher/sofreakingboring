@@ -119,10 +119,10 @@ i.task-note {
 }
 
 .project-card-no-members {
-  float: left;
+  display: inline-table;
   margin: 2px;
   width: 200px;
-  height: 255px;  
+  height: 230px;
   overflow: hidden;
 
   .progress {
@@ -131,6 +131,11 @@ i.task-note {
     margin-top: -5px;
     margin-bottom: 5px;
     height: 4px;
+  }
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
   }
 }
 
@@ -207,6 +212,12 @@ i.task-note {
   .progress {
     margin-top: 2px;
     margin-bottom: 2px;
+  }
+
+  .members {
+    width: 100%;
+    height: 78px;
+    overflow: auto;
   }
 }
 

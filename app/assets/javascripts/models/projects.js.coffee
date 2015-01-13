@@ -12,6 +12,10 @@ class @ProjectsModel
   notify: ->
     subscriber() for subscriber in @subscribers
 
+  getProject: (id) ->
+    found = @projects.where id:id
+    if found.length > 0 then found[0] else null
+
   getProjects: (filter = '', sort = '', order = 'asc', displayClosed = false) ->
     projects = @filterProjects(@projects, filter, displayClosed)
     projects = @sortProjects(projects, sort, order) if sort.length > 0
@@ -54,3 +58,9 @@ class @ProjectsModel
       @projects = projects
       @notify()
       callback()
+
+  loadMembers: (project, callback) ->
+    Api.project_members project.id, (members) ->
+      project.members = members
+      callback()
+    

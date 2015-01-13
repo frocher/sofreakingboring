@@ -16,6 +16,7 @@ module API
 
     class ProjectMember < Grape::Entity
       expose :id, :project_id, :user_id, :username, :role, :created_at
+      expose :avatar_url
     end
 
     class ProjectSnapshot < Grape::Entity

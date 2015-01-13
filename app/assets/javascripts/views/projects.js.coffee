@@ -75,7 +75,28 @@ class @ProjectsCardsView
     $("[data-toggle='tooltip']").tooltip({container: 'body'})
 
     $(".project-card-no-members .inner").flip( {trigger: 'manual'} );
-    $(".project-info.flip-on").on 'click', (e) ->
-      $(e.target).parents('.inner').flip(true)
+    
+    $(".project-info.flip-on").on 'click', (e) =>
+      itemElement = $(e.target).parents('.inner')
+      itemElement.flip(true)
+      projectId = $(e.target).data('project_id')
+      project = @model.getProject(projectId)
+      @model.loadMembers(project, => 
+        memberElement = itemElement.find('.members')[0]
+        @renderMembers(project.members, memberElement)
+        $("[data-toggle='tooltip']").tooltip({container: 'body'})
+      )
+
+
     $(".project-info.flip-off").on 'click', (e) ->
       $(e.target).parents('.inner').flip(false)
+
+  renderMembers: (members, e) ->
+    tpl = "<img class='avatar' data-src='%%avatar_url%%' width='35' height='35' title='%%name%%' data-toggle='tooltip'>"
+    html = ''
+    for member in members
+      memberHtml = tpl.replace('data-src', 'src')
+      memberHtml = memberHtml.replace('%%avatar_url%%', member.avatar_url)
+      memberHtml = memberHtml.replace('%%name%%', member.username)
+      html += memberHtml
+    $(e).html(html)

@@ -45,4 +45,9 @@ class ProjectMember < ActiveRecord::Base
   def username
     user.name
   end
+
+  def avatar_url
+    ApplicationController.helpers.avatar_icon(user.email)
+  end
+
 end
