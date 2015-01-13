@@ -10,7 +10,9 @@ module API
       # Example Request:
       #   GET /projects
       get do
-        if current_user.is_admin? && params[:admin]
+        allAsked = 
+
+        if current_user.is_admin? && params[:admin] == true
           @projects = paginate Project.all
         else
           @projects = paginate current_user.projects
