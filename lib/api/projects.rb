@@ -12,7 +12,7 @@ module API
       get do
         allAsked = 
 
-        if current_user.is_admin? && params[:admin] == true
+        if current_user.is_admin? && params[:admin] == 'true'
           @projects = paginate Project.all
         else
           @projects = paginate current_user.projects
