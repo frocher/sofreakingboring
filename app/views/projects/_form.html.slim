@@ -49,3 +49,11 @@
         - if @project.attachment?
           hr
           = link_to 'Remove picture', project_remove_attachment_path(@project), data: { confirm: "Picture will be removed. Are you sure?"}, method: :put, class: "btn btn-danger btn-small remove-picture"
+    - if can?(current_user, :delete_project, @project) and @project.id != nil
+      .box.box-solid
+        .box-header
+          h3.box-title Delete project
+        .box-body
+          =link_to project_path(@project), data: { confirm: "Project will be removed. That can't be undone. Are you sure?"}, method: :delete, class: "btn btn-danger", title: "Delete project"
+            i.sign.fa.fa-trash-o.bg-red
+            span  Delete project

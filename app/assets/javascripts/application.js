@@ -31,21 +31,32 @@
 //= require morris.min
 //= require holder
 
-//= require duration
-//= require common
 //= require devise
 //= require keybindings
-//= require api
 //= require dispatcher
-//= require home
-//= require admin/projects
-//= require admin/users
-//= require profiles
-//= require projects
-//= require project_dashboard
-//= require projects/projects_helper
-//= require projects/assignee_editor
-//= require projects/duration_editor
-//= require projects/members
-//= require projects/tasks
-//= require projects/timesheets
+
+//= require controllers/admin/projects
+//= require controllers/admin/users
+//= require controllers/home
+//= require controllers/members
+//= require controllers/project_dashboard
+//= require controllers/projects
+//= require controllers/tasks
+//= require controllers/timesheets
+
+//= require models/projects
+//= require models/tasks
+//= require models/users
+
+//= require shared/api
+//= require shared/assignee_editor
+//= require shared/common
+//= require shared/duration
+//= require shared/duration_editor
+//= require shared/projects_helper
+
+//= require views/profiles
+//= require views/projects
+//= require views/tasks
+//= require views/users
+

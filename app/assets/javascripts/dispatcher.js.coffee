@@ -20,7 +20,7 @@ class Dispatcher
         AdminProjects.init()
       when 'home:index'
         Home.init()
-      when 'projects'
+      when 'projects:index'
         Projects.init()
       when 'projects:show'
         ProjectDashboard.init()

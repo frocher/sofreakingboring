@@ -1,0 +1,18 @@
+.box
+  .box-body
+    form.navbar-form
+      .form-group
+        input#projectsFilter.form-control type='search' placeholder="Search..."
+        | &nbsp;
+        select#projectsSort.form-control
+          option value="name" data-order="asc" Sort by name
+          option value="delta" data-order="asc" Sort by delta
+          option value="original_estimate" data-order="asc" Sort by original estimate
+          option value="remaining_estimate" data-order="asc" Sort by remaining estimate
+          option value="work_logged" data-order="asc" Sort by work logged
+          option value="created_at" data-order="desc" Sort by creation time
+        | &nbsp;
+        button#display_closed.btn.btn-default type="button" title='Show closed projects' data-toggle='tooltip'
+          span class="fa fa-check"
+= render '/shared/loading_spinner'
+#projects
