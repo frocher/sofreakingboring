@@ -42,7 +42,7 @@ class @TasksGridView
         },
         {
           data: "tag_list"
-          renderer: @tagsRenderer
+          renderer: ProjectsHelper.tagsRenderer
           readOnly:!gon.can_update_tasks
         },
         {
@@ -154,18 +154,6 @@ class @TasksGridView
       $(td).find('i').attr('title', note)
       $('i.task-note').tooltip({container: 'body'})
     return td
-
-  tagsRenderer: (instance, td, row, col, prop, value, cellProperties) ->
-    if value? and value != ''
-      tags = value.split(',')
-      value = ''
-      for tag in tags
-        labelClass = ProjectsHelper.getTagColor(tag)
-        value += "<span class='label bg-#{labelClass}'>#{tag}</span>&nbsp;"
-      escaped = Handsontable.helper.stringify(value)
-      td.innerHTML = escaped
-    else
-      Handsontable.renderers.TextRenderer.apply(this, arguments)
 
   assigneeRenderer: (instance, td, row, col, prop, value, cellProperties) ->
     if value? and value != ''

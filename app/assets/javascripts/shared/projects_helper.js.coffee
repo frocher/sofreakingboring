@@ -36,6 +36,18 @@ $ ->
       when 14 then labelClass = 'back'
     labelClass
 
+  tagsRenderer: (instance, td, row, col, prop, value, cellProperties) ->
+    if value? and value != ''
+      tags = value.split(',')
+      value = ''
+      for tag in tags
+        labelClass = ProjectsHelper.getTagColor(tag)
+        value += "<span class='label bg-#{labelClass}'>#{tag}</span>&nbsp;"
+      escaped = Handsontable.helper.stringify(value)
+      td.innerHTML = escaped
+    else
+      Handsontable.renderers.TextRenderer.apply(this, arguments)
+      
   deltaRenderer: (instance, td, row, col, prop, value, cellProperties) ->
     try 
       if value < 0

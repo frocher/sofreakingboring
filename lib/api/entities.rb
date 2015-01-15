@@ -33,7 +33,12 @@ module API
     end
 
     class TimesheetTask < Grape::Entity
+      format_with :to_s do |tags|
+        tags.to_s
+      end
+      
       expose :id, :code, :name, :description, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday, :original_estimate, :remaining_estimate, :work_logged, :delta
+      expose :tag_list, format_with: :to_s
     end
 
     class WorkLog < Grape::Entity

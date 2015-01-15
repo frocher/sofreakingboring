@@ -5,6 +5,7 @@ class TimesheetTask
   attr_accessor :code
   attr_accessor :name
   attr_accessor :description
+  attr_accessor :tag_list
   attr_accessor :monday
   attr_accessor :tuesday
   attr_accessor :wednesday
@@ -21,6 +22,7 @@ class TimesheetTask
     @code               = task.code
     @name               = task.name
     @description        = task.description
+    @tag_list           = task.tag_list
     @monday             = 0
     @tuesday            = 0
     @wednesday          = 0

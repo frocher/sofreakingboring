@@ -38,6 +38,14 @@
         if !addIt
           addIt = task.name.toLowerCase().indexOf(filter) > -1
 
+        if !addIt
+          tags = task.tag_list.split(',')
+          for tag in tags
+            tag = $.trim(tag)
+            if tag.toLowerCase().indexOf(filter) > -1
+              addIt = true
+              break
+
         filtered.push(task) if addIt
 
       data = filtered
@@ -91,10 +99,15 @@
       startRows: 0,
       startCols: 9,
       outsideClickDeselects: false,
-      colHeaders: ["Code", "Name", "Mon.", "Tue.", "Wed.", "Thu.", "Fri.", "Sat.", "Sun.", "Remaining", "Delta"]
+      colHeaders: ["Code", "Name", "Tags", "Mon.", "Tue.", "Wed.", "Thu.", "Fri.", "Sat.", "Sun.", "Remaining", "Delta"]
       columns: [
         { data: "code", readOnly:true }
         { data: "name", renderer: Timesheet.nameRenderer, readOnly:true }
+        {
+          data: "tag_list"
+          renderer: ProjectsHelper.tagsRenderer
+          readOnly: true
+        }
         {
           data: "monday"
           renderer: ProjectsHelper.durationRenderer
@@ -169,8 +182,8 @@
       cells: (row, col, prop) ->
         cellProperties = {}
         switch col
-          when 0, 1 then cellProperties.readOnly = true
-          when 2, 3, 4, 5, 6, 7, 8, 9 then cellProperties.readOnly = Timesheet.isReadOnly()
+          when 0, 1, 2 then cellProperties.readOnly = true
+          when 3, 4, 5, 6, 7, 8, 9, 10 then cellProperties.readOnly = Timesheet.isReadOnly()
 
         cellProperties
 
@@ -186,14 +199,14 @@
             physicalIndex = change[0]
           item = instance.getSourceDataAtRow(physicalIndex)
 
-          monday    = parseInt(hot.getDataAtCell(change[0], 2))
-          tuesday   = parseInt(hot.getDataAtCell(change[0], 3))
-          wednesday = parseInt(hot.getDataAtCell(change[0], 4))
-          thursday  = parseInt(hot.getDataAtCell(change[0], 5))
-          friday    = parseInt(hot.getDataAtCell(change[0], 6))
-          saturday  = parseInt(hot.getDataAtCell(change[0], 7))
-          sunday    = parseInt(hot.getDataAtCell(change[0], 8))
-          remaining = parseInt(hot.getDataAtCell(change[0], 9))
+          monday    = parseInt(hot.getDataAtCell(change[0], 3))
+          tuesday   = parseInt(hot.getDataAtCell(change[0], 4))
+          wednesday = parseInt(hot.getDataAtCell(change[0], 5))
+          thursday  = parseInt(hot.getDataAtCell(change[0], 6))
+          friday    = parseInt(hot.getDataAtCell(change[0], 7))
+          saturday  = parseInt(hot.getDataAtCell(change[0], 8))
+          sunday    = parseInt(hot.getDataAtCell(change[0], 9))
+          remaining = parseInt(hot.getDataAtCell(change[0], 10))
 
           switch change[1]
             when "monday"    then monday = value
@@ -206,7 +219,7 @@
             when "remaining_estimate" then remaining = value
 
           delta = item.original_estimate - (item.work_logged + remaining + monday + tuesday + wednesday + thursday + friday + saturday + sunday)
-          hot.setDataAtCell(change[0], 10, delta)
+          hot.setDataAtCell(change[0], 11, delta)
 
       afterChange: (changes, source) ->
         if source == 'loadData'
