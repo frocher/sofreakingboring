@@ -90,6 +90,7 @@ gem 'puma'
 
 # Monitoring
 gem 'newrelic_rpm'
+gem 'newrelic-grape'
 
 gem 'annotate', '~> 2.6.5', group: :development
 
