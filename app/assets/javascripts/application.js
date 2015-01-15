@@ -18,7 +18,7 @@
 //= require select2
 //= require admin_lte
 //= require jquery.flip
-//= require jquery.handsontable.full
+//= require handsontable.full
 //= require jquery.knob
 //= require jquery.flot.min
 //= require jquery.flot.categories.min

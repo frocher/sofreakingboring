@@ -59,6 +59,19 @@
   }
 }
 
+#tab-cards, #tab-sheet {
+  overflow: hidden;
+}
+
+.handsontable .currentRow {
+  background-color: #fafafa;
+}
+
+.handsontable .currentCol {
+  background-color: #fafafa;
+}
+
+
 .thumbnail.home {
   img {
     float: left;
@@ -155,11 +168,18 @@ i.task-note {
 }
 
 #tasksGrid {
-  display: none;
+  display: block;
+  width: 100%;
+  overflow: scroll;
+  padding:2px;
 }
 
+
 #timesheetGrid  {
-  display: none;
+  display: block;
+  width: 100%;
+  overflow: scroll;
+  padding:2px;
 }
 
 #members tbody tr td {

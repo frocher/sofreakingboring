@@ -18,9 +18,11 @@ class @TasksGridView
   initGrid: ->
     grid = $('#tasksGrid')
     grid.handsontable({
-      data: @model.loadTasks()
+      data: [],
       stretchH: 'all',
       columnSorting: true,
+      currentRowClassName: 'currentRow',
+      currentColClassName: 'currentCol',
       startRows: 0,
       startCols: 8,
       outsideClickDeselects: false,
@@ -38,8 +40,16 @@ class @TasksGridView
           allowInvalid: false 
           readOnly:!gon.can_update_tasks
         },
-        { data: "tag_list", renderer: @tagsRenderer, readOnly:!gon.can_update_tasks },
-        { data: "created_at", renderer: @dateRenderer, readOnly:true },
+        {
+          data: "tag_list"
+          renderer: @tagsRenderer
+          readOnly:!gon.can_update_tasks
+        },
+        {
+          data: "created_at"
+          renderer: @dateRenderer
+          readOnly:true
+        },
         { 
           data: "assignee_id"
           selectOptions: @model.selectableMembers
@@ -55,7 +65,11 @@ class @TasksGridView
           allowInvalid: false
           readOnly:!gon.can_update_tasks
         },
-        { data: "work_logged", renderer: ProjectsHelper.durationRenderer, readOnly:true },
+        {
+          data: "work_logged"
+          renderer: ProjectsHelper.durationRenderer
+          readOnly:true
+        },
         {
           data: "remaining_estimate"
           renderer: ProjectsHelper.durationRenderer
@@ -64,7 +78,11 @@ class @TasksGridView
           editor:"duration"
           readOnly:!gon.can_update_tasks
         },
-        { data: "delta", renderer: ProjectsHelper.deltaRenderer, readOnly:true }
+        {
+          data: "delta"
+          renderer: ProjectsHelper.deltaRenderer
+          readOnly:true
+        }
       ]
       beforeChange: (changes, source) =>
         hot = @getTable()
@@ -98,7 +116,7 @@ class @TasksGridView
           if change[1] != 'delta'
             physicalIndex = @getPhysicalIndex(change[0])
             instance = grid.handsontable('getInstance')
-            item = instance.getDataAtRow(physicalIndex)
+            item = instance.getSourceDataAtRow(physicalIndex)
             if item?
               Api.update_task gon.project_id, item.id, item, (task) ->
                 # nothing to do here
@@ -208,9 +226,6 @@ class @TasksGridView
     @getTable().render()
 
   onUpdate: =>
-    $('#loadingSpinner').hide()
-    $('#tasksGrid').show()
-
     @getTable().loadData(@getTasks())
     @render()
 

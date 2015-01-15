@@ -10,8 +10,12 @@
 
     Tasks.model.loadMembers( ->
       Tasks.initDialogAssignee()
-      Tasks.gridView.initialize()
       Tasks.cardsView.initialize()
+      Tasks.gridView.initialize()
+      
+      Tasks.model.loadTasks( ->
+        Tasks.currentView().render()
+      )
     )
 
     Tasks.initTabs()    
@@ -27,7 +31,7 @@
       }));
 
   initTabs: ->
-    $('#tab-sheet').hide()
+    Tasks.hideElement('#tab-sheet')
 
     $('#show-sheet').on 'click', ->
       Tasks.showGridView()
@@ -35,10 +39,10 @@
     $('#show-cards').on 'click', ->
       Tasks.showCardsView()
 
-
   showGridView: ->
-    $('#tab-sheet').show()
-    $('#tab-cards').hide()
+    Tasks.showElement('#tab-sheet')
+    Tasks.hideElement('#tab-cards')
+
     $('#show-cards').toggleClass('active')
     $('#show-cards').removeClass('btn-primary')
     $('#show-cards').addClass('btn-default')
@@ -47,22 +51,29 @@
     $('#show-sheet').addClass('btn-primary')
     $('#tasksSort').addClass('hide')
     $('#display_completed').removeClass('hide')
-    Tasks.currentView().render()
+    Tasks.currentView().onUpdate()
     Tasks.updateSummary()
 
   showCardsView: ->
-      $('#tab-cards').show()
-      $('#tab-sheet').hide()
-      $('#show-cards').toggleClass('active')
-      $('#show-cards').removeClass('btn-default')
-      $('#show-cards').addClass('btn-primary')
-      $('#show-sheet').toggleClass('active')
-      $('#show-sheet').removeClass('btn-primary')
-      $('#show-sheet').addClass('btn-default')
-      $('#tasksSort').removeClass('hide')
-      $('#display_completed').addClass('hide')
-      Tasks.currentView().render()
-      Tasks.updateSummary()
+    Tasks.showElement('#tab-cards')
+    Tasks.hideElement('#tab-sheet')
+
+    $('#show-cards').toggleClass('active')
+    $('#show-cards').removeClass('btn-default')
+    $('#show-cards').addClass('btn-primary')
+    $('#show-sheet').toggleClass('active')
+    $('#show-sheet').removeClass('btn-primary')
+    $('#show-sheet').addClass('btn-default')
+    $('#tasksSort').removeClass('hide')
+    $('#display_completed').addClass('hide')
+    Tasks.currentView().onUpdate()
+    Tasks.updateSummary()
+
+  showElement: (e) ->
+    $(e).css("height", 'auto');
+
+  hideElement: (e) ->
+    $(e).css("height", 0);
 
   initButtons: ->
     $("#btn-add-task").on "click", ->
@@ -86,10 +97,11 @@
       Tasks.model.loadTasks()
 
   onUpdate: =>
+    $('#loadingSpinner').hide()
     Tasks.updateSummary()
 
   currentView: ->
-    if $('#tab-sheet').is(':visible')
+    if $('#tab-sheet').height() > 0
       Tasks.gridView
     else
       Tasks.cardsView

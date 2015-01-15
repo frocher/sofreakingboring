@@ -85,11 +85,13 @@
     grid.handsontable({
       data: Timesheet.loadGridData(),
       stretchH: 'all',
+      currentRowClassName: 'currentRow',
+      currentColClassName: 'currentCol',
       columnSorting: true,
       startRows: 0,
       startCols: 9,
       outsideClickDeselects: false,
-      colHeaders: ["Code", "Name", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Current remaining", "Current delta"]
+      colHeaders: ["Code", "Name", "Mon.", "Tue.", "Wed.", "Thu.", "Fri.", "Sat.", "Sun.", "Remaining", "Delta"]
       columns: [
         { data: "code", readOnly:true }
         { data: "name", renderer: Timesheet.nameRenderer, readOnly:true }
@@ -182,7 +184,7 @@
             physicalIndex = instance.sortIndex[change[0]][0]
           else
             physicalIndex = change[0]
-          item = instance.getDataAtRow(physicalIndex)
+          item = instance.getSourceDataAtRow(physicalIndex)
 
           monday    = parseInt(hot.getDataAtCell(change[0], 2))
           tuesday   = parseInt(hot.getDataAtCell(change[0], 3))
@@ -217,7 +219,7 @@
               physicalIndex = instance.sortIndex[change[0]][0]
             else
               physicalIndex = change[0]
-            item = instance.getDataAtRow(physicalIndex)
+            item = instance.getSourceDataAtRow(physicalIndex)
             value = change[3]
             workLog = true
             switch change[1]
