@@ -34,6 +34,26 @@ class @Duration
         'long':   'day'
       }
     }
+    months: {
+      patterns: ['month', 'mon', 'mo']
+      value: 10440
+      formats: {
+        'chrono': ':'
+        'micro':  'mo'
+        'short':  'mon'
+        'long':   'month'
+      }
+    }
+    years: {
+      patterns: ['year', 'yr', 'y']
+      value: 125280
+      formats: {
+        'chrono': ':'
+        'micro':  'y'
+        'short':  'yr'
+        'long':   'year'
+      }
+    }
   }
     
   @stringify: (seconds, options) ->
@@ -55,7 +75,7 @@ class @Duration
     else
       prefix = ''
     
-    units = ['days', 'hours', 'minutes']
+    units = ['years', 'months', 'days', 'hours', 'minutes']
     values = []
 
     for unit, i in units
