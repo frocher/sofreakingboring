@@ -3,7 +3,7 @@
     i.fa.fa-line-chart
     h3.box-title Work Chart (in days)
   .box-body
-    #chart.chart style="height: 250px;"
+    #chart.chart style="height: 350px;"
 
 .box
   .box-header
@@ -16,7 +16,7 @@
           th Day
           - @members.each do |member|
             th style='text-align:center' 
-              = image_tag avatar_icon(member.user.email, 80), class: 'avatar', title: member.name, data: {toggle:'tooltip'}
+              = image_tag avatar_icon(member.user.email, 40), size: '40', class: 'avatar', title: member.name, data: {toggle:'tooltip'}
         = render partial: 'total', locals: {total: @total}
       tbody
         - @results.each do |row|

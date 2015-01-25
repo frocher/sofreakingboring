@@ -93,14 +93,4 @@ module ProjectsHelper
     member.nil? ? '' : member.role
   end
 
-
-  def to_days(minutes)
-    to_day = 60 * 8
-    (Float(minutes) / to_day).round(1)
-  end
-
-  def to_date(day)
-    DateTime.strptime(day, "%Y%m%d")
-  end
-
 end

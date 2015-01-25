@@ -30,10 +30,10 @@ section.sidebar
       = link_to project_members_path(@project) do
         i.fa.fa-users
         span Members
-    li
-      = link_to project_stats_path(@project) do
-        i.fa.fa-line-chart
-        span Statistics
+    / li
+    /  = link_to project_stats_path(@project) do
+    /    i.fa.fa-line-chart
+    /    span Statistics
     - if can?(current_user, :export_project, @project)
       li
         = link_to project_show_export_path(@project)
