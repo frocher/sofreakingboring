@@ -32,6 +32,7 @@ Olb::Application.routes.draw do
     scope module: :projects do
       resources :members
       resources :tasks
+      resources :stats, only: [:index, :show]
       resource  :timesheet do
         get :tasks
       end

@@ -1,0 +1,37 @@
+.box
+  .box-header
+    i.fa.fa-line-chart
+    h3.box-title Work Chart (in days)
+  .box-body
+    #chart.chart style="height: 250px;"
+
+.box
+  .box-header
+    i.fa.fa-th
+    h3.box-title Work Grid
+  .box-body
+    table.table.table-bordered.table-striped
+      thead
+        tr
+          th Day
+          - @members.each do |member|
+            th style='text-align:center' 
+              = image_tag avatar_icon(member.user.email, 80), class: 'avatar', title: member.name, data: {toggle:'tooltip'}
+        = render partial: 'total', locals: {total: @total}
+      tbody
+        - @results.each do |row|
+          tr
+            - row.each do |cell|
+              td = cell
+      tfoot
+        = render partial: 'total', locals: {total: @total}
+
+javascript:
+
+  Morris.Line({
+    element: 'chart',
+    data: #{raw @js_results.to_json()},
+    xkey: 'day',
+    ykeys: #{raw @members.map(&:email).as_json()},
+    labels: #{raw @members.map(&:name).as_json()}
+  });

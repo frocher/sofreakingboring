@@ -28,6 +28,8 @@ class Dispatcher
         Tasks.init()
       when 'projects:members:index', 'projects:members:new'
         Members.init()
+      when 'projects:stats:index'
+        Stats.init()
       when 'projects:timesheets:edit'
         Timesheet.init()
 

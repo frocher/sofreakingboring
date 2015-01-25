@@ -1,0 +1,15 @@
+- @title="Stats"
+.row
+  .col-sm-12
+    .box
+      .box-body
+        form.navbar-form
+          .form-group
+            .input-group
+              span.input-group-addon
+                i.fa.fa-calendar
+              input#periodPicker.form-control placeholder='Select date range...' style='width:190px'
+
+    #results
+      = render partial: '/shared/callout_info', locals: {title: "Select date range", description: 'You can select a date range to see the work log for the given period.'}
+

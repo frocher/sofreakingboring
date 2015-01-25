@@ -34,6 +34,10 @@ class ProjectMember < ActiveRecord::Base
     Task.where("assignee_id=? and project_id=?", user.id, project.id)
   end
 
+  def work_logs(day_start, day_end)
+    WorkLog.joins(task: :project).select("day, sum(worked) as total_worked").where(day:day_start..day_end).where(tasks:{assignee_id:id}).group("day").order(:day)
+  end
+
   def work_logged
     WorkLog.joins('INNER JOIN tasks ON work_logs.task_id = tasks.id').joins('INNER JOIN projects ON tasks.project_id = projects.id').select("sum(worked) as work_sum").where(tasks:{assignee_id:user.id}).where(projects:{id:project.id}).take.work_sum || 0
   end

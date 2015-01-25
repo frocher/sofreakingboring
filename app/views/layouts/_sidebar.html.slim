@@ -14,7 +14,7 @@ section.sidebar
           =link_to edit_project_path(@project), title: "Edit project"
             i.fa.fa-pencil
   ul.sidebar-menu
-    li class=("active" if params[:controller] == "home")
+    li
       = link_to project_path(@project) do
         i.fa.fa-dashboard
         span Dashboard
@@ -26,12 +26,16 @@ section.sidebar
       = link_to project_tasks_path(@project) do
         i.fa.fa-tasks
         span Tasks
-    li class=("active" if params[:controller] == "projects/members")
+    li
       = link_to project_members_path(@project) do
         i.fa.fa-users
         span Members
+    li
+      = link_to project_stats_path(@project) do
+        i.fa.fa-line-chart
+        span Statistics
     - if can?(current_user, :export_project, @project)
-      li class=("active" if params[:controller] == "projects/show_export")
+      li
         = link_to project_show_export_path(@project)
           i.fa.fa-download
           span Export

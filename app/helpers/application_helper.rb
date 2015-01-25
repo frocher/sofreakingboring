@@ -43,13 +43,22 @@ module ApplicationHelper
     datetime.strftime("%b %d, %Y")
   end
 
-  def duration(seconds)
-    if seconds == 0
+  def to_days(minutes)
+    to_day = 60 * 8
+    (Float(minutes) / to_day).round(1)
+  end
+
+  def to_date(day)
+    DateTime.strptime(day, "%Y%m%d")
+  end
+
+  def duration(minutes)
+    if minutes == 0
       "0"
-    elsif seconds < 0
-      '-' + ChronicDuration.output(-seconds, format: :short)
+    elsif minutes < 0
+      '-' + ChronicDuration.output(-minutes, format: :short)
     else
-      ChronicDuration.output(seconds, format: :short)
+      ChronicDuration.output(minutes, format: :short)
     end
   end
 

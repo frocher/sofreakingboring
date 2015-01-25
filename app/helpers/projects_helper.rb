@@ -94,9 +94,9 @@ module ProjectsHelper
   end
 
 
-  def to_days(seconds)
+  def to_days(minutes)
     to_day = 60 * 8
-    (Float(seconds) / to_day).round(1)
+    (Float(minutes) / to_day).round(1)
   end
 
   def to_date(day)

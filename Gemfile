@@ -20,6 +20,8 @@ gem 'font-awesome-rails'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'momentjs-rails'
+gem 'bootstrap-daterangepicker-rails'
 
 # Auth
 gem 'devise'

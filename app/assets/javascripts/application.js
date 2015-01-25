@@ -27,6 +27,7 @@
 //= require jquery.flot.resize.min
 //= require bootstrap-datepicker
 //= require moment
+//= require daterangepicker
 //= require raphael.min
 //= require morris.min
 //= require holder
@@ -41,6 +42,7 @@
 //= require controllers/members
 //= require controllers/project_dashboard
 //= require controllers/projects
+//= require controllers/stats
 //= require controllers/tasks
 //= require controllers/timesheets
 

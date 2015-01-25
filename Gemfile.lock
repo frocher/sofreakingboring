@@ -55,6 +55,8 @@ GEM
       rails (>= 3.1)
     bcrypt (3.1.9)
     bcrypt (3.1.9-x86-mingw32)
+    bootstrap-daterangepicker-rails (0.1.1)
+      railties (~> 4.0)
     bootstrap-sass (3.3.1.0)
       sass (~> 3.2)
     breadcrumbs_on_rails (2.3.0)
@@ -145,6 +147,8 @@ GEM
     mime-types (2.4.3)
     mini_portile (0.6.2)
     minitest (5.3.5)
+    momentjs-rails (2.9.0)
+      railties (>= 3.1)
     mousetrap-rails (1.4.6)
     multi_json (1.10.1)
     multi_xml (0.5.5)
@@ -309,6 +313,7 @@ DEPENDENCIES
   acts-as-taggable-on
   annotate (~> 2.6.5)
   axlsx_rails
+  bootstrap-daterangepicker-rails
   bootstrap-sass
   breadcrumbs_on_rails
   capybara
@@ -324,6 +329,7 @@ DEPENDENCIES
   jquery-rails
   kaminari
   minitest (~> 5.3.0)
+  momentjs-rails
   mousetrap-rails
   mysql2
   newrelic-grape
