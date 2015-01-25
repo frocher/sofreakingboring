@@ -10,6 +10,7 @@
                 i.fa.fa-calendar
               input#periodPicker.form-control placeholder='Select date range...' style='width:190px'
 
+    = render partial: '/shared/loading_spinner', locals: {hide_spinner: true}
     #results
       = render partial: '/shared/callout_info', locals: {title: "Select date range", description: 'You can select a date range to see the work log for the given period.'}
 

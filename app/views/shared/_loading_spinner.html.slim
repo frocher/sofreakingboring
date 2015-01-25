@@ -1,3 +1,4 @@
-#loadingSpinner
+- hide_spinner = false unless local_assigns.has_key?(:hide_spinner)
+#loadingSpinner style=('display:none' if hide_spinner)
   i.fa.fa-cog.fa-spin
   | &nbsp;loading...
