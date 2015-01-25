@@ -35,7 +35,7 @@ class ProjectMember < ActiveRecord::Base
   end
 
   def work_logs(day_start, day_end)
-    WorkLog.joins(task: :project).select("day, sum(worked) as total_worked").where(day:day_start..day_end).where(tasks:{assignee_id:id}).group("day").order(:day)
+    WorkLog.joins('INNER JOIN tasks ON work_logs.task_id = tasks.id').joins('INNER JOIN projects ON tasks.project_id = projects.id').select("day, sum(worked) as total_worked").where(tasks:{assignee_id:user.id}).where(projects:{id:project.id}).where(day:day_start..day_end).group("day").order(:day)
   end
 
   def work_logged

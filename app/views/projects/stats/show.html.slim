@@ -28,8 +28,9 @@
 
 javascript:
 
-  Morris.Line({
+  Morris.Bar({
     element: 'chart',
+    stacked: true,
     data: #{raw @js_results.to_json()},
     xkey: 'day',
     ykeys: #{raw @members.map(&:email).as_json()},
