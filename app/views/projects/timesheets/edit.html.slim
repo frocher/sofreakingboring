@@ -29,9 +29,14 @@
           | &nbsp;
           .form-group
             button#display_completed.btn.btn-default type="button" title='Show completed tasks' data-toggle='tooltip'
-              span class="fa fa-check"
+              span class="fa fa-eye"
   .col-sm-8
 .row
   .col-sm-12
-    #timesheetGrid
+    #timesheetContainer style='display:none'
+      #timesheetGrid
+      #calloutNoTasks
+        = render partial: '/shared/callout_info', locals: {title: 'No tasks', description: 'No task has been assigned to the selected user.'}
+      #calloutNoVisibleTasks
+        = render partial: '/shared/callout_info', locals: {title: 'No tasks', description: 'No task to display. Clic on the eye button above to see completed tasks.'}
 

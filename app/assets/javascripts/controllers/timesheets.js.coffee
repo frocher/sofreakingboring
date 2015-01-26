@@ -18,11 +18,14 @@
   loadGridData: ->
     user_id = $('#members').val()
 
+    $('#timesheetContainer').show()
+    Timesheet.hideAll()
+
     Api.timesheet_tasks gon.project_id, user_id, gon.period_start, (tasks) ->
-      $('#timesheetGrid').show()
       Timesheet.initDeltas(tasks)
       Timesheet.tasks = tasks
       Timesheet.filterData()
+
     data = null
 
   filterData: ->
@@ -58,6 +61,30 @@
 
     handsontable = $('#timesheetGrid').data('handsontable')
     handsontable.loadData(data)
+    Timesheet.updateVisibility()
+
+  updateVisibility: ->
+    Timesheet.hideAll()
+
+    if Timesheet.tasks.length == 0
+      Timesheet.showElement('#calloutNoTasks')
+    else
+      handsontable = $('#timesheetGrid').data('handsontable')
+      if handsontable.getData().length == 0
+        Timesheet.showElement('#calloutNoVisibleTasks')
+      else
+        Timesheet.showElement('#timesheetGrid')
+
+  hideAll: ->
+    Timesheet.hideElement('#timesheetGrid')
+    Timesheet.hideElement('#calloutNoTasks')
+    Timesheet.hideElement('#calloutNoVisibleTasks')
+
+  showElement: (e) ->
+    $(e).css("height", 'auto');
+
+  hideElement: (e) ->
+    $(e).css("height", 0);
 
   updatePeriod: (periodStart) ->
     periodEnd = moment(periodStart).add('d', 6)
