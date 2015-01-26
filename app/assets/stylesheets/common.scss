@@ -71,6 +71,10 @@
   background-color: #fafafa;
 }
 
+// fix for datepicker
+.ht_clone_top {
+  z-index: 9 !important;
+}
 
 .thumbnail.home {
   img {
