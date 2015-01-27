@@ -1,5 +1,7 @@
 class Projects::StatsController < Projects::ItemsController
   def index
+    add_project_breadcrumb
+    add_breadcrumb "Statistics", :project_stats_path
   end
 
   def show
