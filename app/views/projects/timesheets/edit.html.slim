@@ -33,10 +33,9 @@
   .col-sm-8
 .row
   .col-sm-12
-    #timesheetContainer style='display:none'
-      #timesheetGrid
-      #calloutNoTasks
-        = render partial: '/shared/callout_info', locals: {title: 'No tasks', description: 'No task has been assigned to the selected user.'}
-      #calloutNoVisibleTasks
-        = render partial: '/shared/callout_info', locals: {title: 'No tasks', description: 'No task to display. Clic on the eye button above to see completed tasks.'}
+    #timesheetGrid
+    #calloutNoTasks style='display:none'
+      = render partial: '/shared/callout_info', locals: {title: 'No tasks', description: 'No task has been assigned to the selected user.'}
+    #calloutNoVisibleTasks style='display:none'
+      = render partial: '/shared/callout_info', locals: {title: 'No tasks', description: 'No task to display. Clic on the eye button above to see completed tasks.'}
 
