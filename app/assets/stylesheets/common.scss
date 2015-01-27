@@ -71,6 +71,10 @@
   background-color: #fafafa;
 }
 
+.handsontable table th, .handsontable table td {
+   max-width: 200px;
+}
+
 // fix for datepicker
 .ht_clone_top {
   z-index: 9 !important;
