@@ -2,17 +2,20 @@
 
   init: ->
     Home.initPeriod()
+    return
 
   initPeriod: ->
     $('#previousPeriod').click ->
-        periodStart = moment(gon.period_start, "YYYYMMDD")
-        periodStart.add('d', -7)
-        Home.updatePeriod(periodStart)
+      periodStart = moment(gon.period_start, "YYYYMMDD")
+      periodStart.add('d', -7)
+      Home.updatePeriod(periodStart)
+      return
 
     $('#nextPeriod').click ->
-        periodStart = moment(gon.period_start, "YYYYMMDD")
-        periodStart.add('d', 7)
-        Home.updatePeriod(periodStart)
+      periodStart = moment(gon.period_start, "YYYYMMDD")
+      periodStart.add('d', 7)
+      Home.updatePeriod(periodStart)
+      return
 
     $('#dpPeriod').datepicker({
       endDate: moment(gon.period_end, "YYYYMMDD").toDate()
@@ -22,6 +25,7 @@
     }).on( "changeDate", (e) ->
         periodStart = moment(e.date).startOf('isoWeek')
         Home.updatePeriod(periodStart)
+        return
       )
 
   updatePeriod: (periodStart) ->
@@ -36,3 +40,5 @@
     )
     period = periodStart.format("MMM DD, YYYY") + " - " + periodEnd.format("MMM DD, YYYY")
     $('#periodInput').val(period)
+    return
+

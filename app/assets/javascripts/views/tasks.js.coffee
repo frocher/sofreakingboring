@@ -14,6 +14,7 @@ class @TasksGridView
 
   initialize: ->
     @initGrid()
+    return
 
   initGrid: ->
     grid = $('#tasksGrid')
@@ -107,6 +108,7 @@ class @TasksGridView
 
             delta = original - (logged + remaining)
             hot.setDataAtRowProp(change[0], 'delta', delta)
+        return
       afterChange: (changes, source) =>
         Tasks.updateSummary()
 
@@ -120,6 +122,7 @@ class @TasksGridView
             if item?
               Api.update_task gon.project_id, item.id, item, (task) ->
                 # nothing to do here
+        return
 
       cells: (row, col, prop) =>
         cellProperties = {}
@@ -186,6 +189,7 @@ class @TasksGridView
   deselectTask: ->
     @saveSelected = @getSelectedTask()
     @getTable().deselectCell()
+    return
 
   deleteTasks: ->
     hot = @getTable()
@@ -209,13 +213,16 @@ class @TasksGridView
         @model.removeTasks(tasks)
     else
       alert('You must select at least one row')
+    return
 
   render: ->
     @getTable().render()
+    return
 
   onUpdate: =>
     @getTable().loadData(@getTasks())
     @render()
+    return
 
 
 class @TasksCardsView
@@ -227,6 +234,8 @@ class @TasksCardsView
   initialize: ->
     $('#tasksSort').change =>
       @render()
+      return
+    return
 
   getSelectedTask: ->
     @selectedTask
@@ -244,6 +253,7 @@ class @TasksCardsView
         @model.removeTasks(tasks)
     else
       alert('You must select at least one task')
+    return
 
   getTasks: ->
     filter = $('#tasksFilter').val()
@@ -272,6 +282,7 @@ class @TasksCardsView
       @selectedTask = @model.getTask(id)
       $('#taskModal').modal('show', e.currentTarget)
       false
+    return
 
   renderColumn: (column, tasks, deletable) ->
     tpl = $('#task-card-tpl').html()
@@ -320,6 +331,8 @@ class @TasksCardsView
 
       column.append(html)
       $("#card-#{task.id}").find('i.task-description').attr('title', description)
+    return
 
   onUpdate: =>
     @render()
+    return

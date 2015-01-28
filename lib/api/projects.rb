@@ -20,6 +20,19 @@ module API
         present @projects, with: Entities::Project
       end
 
+      # Get recent projects list for authenticated user
+      #
+      # Example Request:
+      #   GET /projects/recents
+      get "recents" do
+        recent_openings = paginate current_user.project_openings
+        @projects = Array.new
+        recent_openings.each do |recent|
+          @projects << recent.project
+        end
+        present @projects, with: Entities::Project
+      end
+
       # Get a single project
       #
       # Parameters:

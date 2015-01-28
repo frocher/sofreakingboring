@@ -14,6 +14,7 @@
   initDeltas: (tasks) ->
     for task in tasks
       task.delta = task.original_estimate - (task.work_logged + task.remaining_estimate + task.monday + task.tuesday + task.wednesday + task.thursday + task.friday)
+    return
 
   loadGridData: ->
     user_id = $('#members').val()
@@ -71,6 +72,7 @@
       handsontable = $('#timesheetGrid').data('handsontable')
       if handsontable.getData().length == 0
         Timesheet.showElement('#calloutNoVisibleTasks')
+    return
 
   hideAll: ->
     Timesheet.hideElement('#calloutNoTasks')
@@ -78,9 +80,11 @@
 
   showElement: (e) ->
     $(e).show()
+    return
 
   hideElement: (e) ->
     $(e).hide()
+    return
 
   updatePeriod: (periodStart) ->
     periodEnd = moment(periodStart).add('d', 6)
@@ -243,6 +247,7 @@
 
           delta = item.original_estimate - (item.work_logged + remaining + monday + tuesday + wednesday + thursday + friday + saturday + sunday)
           hot.setDataAtCell(change[0], 11, delta)
+        return
 
       afterChange: (changes, source) ->
         if source == 'loadData'
@@ -280,6 +285,7 @@
               # update task
               data = {id:item.id, remaining_estimate:value}
               Api.update_remaining gon.project_id, item.id, data, (task) ->
+        return
 
     })
 

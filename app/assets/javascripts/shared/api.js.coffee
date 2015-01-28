@@ -2,6 +2,7 @@
   users_path:             "/api/:version/users.json"
   user_path:              "/api/:version/users/:id.json"
   projects_path:          "/api/:version/projects.json"
+  recent_projects_path:   "/api/:version/projects/recents.json"
   project_members_path:   "/api/:version/projects/:project_id/members.json"
   project_snapshots_path: "/api/:version/projects/:project_id/snapshots.json"
   tasks_path:             "/api/:version/projects/:project_id/tasks.json"
@@ -39,7 +40,7 @@
     ).done (users) ->
       callback(users)
 
-  # Return user projects list.
+  # Return user projects list or all projects for admin.
   projects: (admin, per_page, callback) ->
     url = Api.buildUrl(Api.projects_path)
 
@@ -53,6 +54,18 @@
     ).done (projects) ->
       callback(projects)
 
+  # Return user recent projects list.
+  recent_projects: (callback) ->
+    url = Api.buildUrl(Api.recent_projects_path)
+
+    $.ajax(
+      url: url
+      data:
+        private_token: gon.api_token
+        per_page: 3
+      dataType: "json"
+    ).done (projects) ->
+      callback(projects)
 
   project_members: (project_id, callback) ->
     url = Api.buildUrl(Api.project_members_path)
