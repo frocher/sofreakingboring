@@ -1,3 +1,23 @@
+.hero-section {
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    padding-left: 50px;
+    text-shadow: 1px 2px 4px rgba(0,0,0,0.7);
+}
+
+h1.hero {
+    margin-top: 50px;
+    font-weight: 700;
+    color: #fff;
+    font-size: 46px;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.intro-text {
+    text-align: center;   
+    font-size: 28px;
+}
+
 .light {
     font-weight: 400;
 }
@@ -56,7 +76,15 @@
     display: none;
 }
 
+#login-box {
+    opacity: 0.9;
+}
+
 @media screen and (min-width:767px) {
+    h1.hero {
+        margin-top: 180px;
+    }
+
     .navbar {
         padding: 0;
         border-bottom: 0;
@@ -92,9 +120,6 @@
         display: block;
     }
 
-    .form-box {
-        margin: 90px auto 0 150px;
-    }
 
 }
 
@@ -107,8 +132,18 @@
     line-height: 1.6;
 }
 
-#contact {
+#features {
     width:100%;
     background-color:white;
     color:#222;
+
+    h3 {
+        font-size: 20px;
+    }
+
+    p {
+        text-align: left;
+        font-size: 15px;
+    }
 }
+

@@ -22,11 +22,19 @@ html.bg-black
             li
               a class="page-scroll" href="#about" About
             li
+              a class="page-scroll" href="#features" Features
+            li
               a class="page-scroll" href="#contact" Contact
             li
               a href="http://blog.sofreakingboring.com" target='_blank' Blog
     header#page-top.login-header
-      = yield
+      .row
+        .col-md-7.hero-section
+          h1.hero Who says project time tracking can't be free and simple ?
+          p.intro-text
+            | SoFreakingBoring helps you make project boring tasks not so boring
+        .col-md-5
+          = yield
     section#about.container.content-section.text-center
       .row
         .col-lg-8.col-lg-offset-2
@@ -49,7 +57,29 @@ html.bg-black
             | . 
           p
             | So give
-            a href="#page-top"  it a try.
+            a href="/users/sign_up"  it a try.
+    section#features.container.content-section.text-center
+      .container
+        .col-lg-8.col-lg-offset-2
+          h2 Features
+          .row
+            .col-md-3
+              h3 Project Dashboard
+              p
+                | Your dashboard displays the health and status of each of your projects in gorgeous charts and tables. Know your project and your team progress at a glance.
+            .col-md-3
+              h3 Project Planning
+              p
+                | Our user-friendly project planner lets you build new tasks, assign resources and monitor progress. You have the choice between two views : an agile like board or a more traditional grid.
+            .col-md-3
+              h3 Time Tracking
+              p
+                | Timesheets allow your team members to input time spent and time remaining. The data is updated automatically across project dashboards, reports.
+            .col-md-3
+              h3 Status Reporting
+              p
+                | Choose your reporting timeframe and view the report. And if you want to manipulate all your data in a spreadsheet, just export your project in xlsx format.
+
     section#contact.container.content-section.text-center
       .container
         .col-lg-8.col-lg-offset-2
