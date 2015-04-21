@@ -13,7 +13,7 @@ module API
       #   GET /projects/:id/tasks
       get ":id/tasks" do
         authorize! :read_project, user_project
-        present paginate(user_project.tasks), with: Entities::Task
+        present paginate(user_project.tasks.includes(:work_logs)), with: Entities::Task
       end
 
       # Get a single project task

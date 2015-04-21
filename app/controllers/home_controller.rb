@@ -5,7 +5,7 @@ class HomeController < ApplicationController
   def index
     add_breadcrumb "Dashboard", :root_path
 
-    @recent_openings = current_user.project_openings.order(updated_at: :desc).limit(3)
+    @recent_openings = current_user.project_openings.includes(:project).order(updated_at: :desc).limit(3)
     today = Date.today
     @period_start    = today.beginning_of_week
     @period_end      = @period_start + 6

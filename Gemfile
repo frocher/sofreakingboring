@@ -80,6 +80,9 @@ group :test, :development do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'minitest', '~> 5.3.0'
+  gem 'rack-mini-profiler'
+  gem 'bullet'
+  gem 'quiet_assets'
 end
 
 group :test do

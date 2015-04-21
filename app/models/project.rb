@@ -63,7 +63,8 @@ class Project < ActiveRecord::Base
 
   def work_logged
     resu = 0
-    tasks.each do |task|
+    found = Task.includes(:work_logs).where('project_id=?', id)
+    found.each do |task|
       resu += task.work_logged
     end
     return resu
@@ -71,7 +72,8 @@ class Project < ActiveRecord::Base
 
   def delta
     resu = 0
-    tasks.each do |task|
+    found = Task.includes(:work_logs).where('project_id=?', id)
+    found.each do |task|
       resu += task.delta
     end
     return resu

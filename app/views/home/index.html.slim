@@ -15,7 +15,7 @@
     .small-box.bg-green
       .inner
         h3 
-          = current_user.tasks.not_started.count + current_user.tasks.in_progress.count
+          = current_user.tasks.includes(:work_logs).not_started.count + current_user.tasks.includes(:work_logs).in_progress.count
         p Assigned tasks
       .icon
         i.fa.fa-tasks

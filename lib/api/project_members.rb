@@ -13,7 +13,7 @@ module API
       #   GET /members/:id/tasks
       get ":id/members" do
         authorize! :read_project_member, user_project
-        present paginate(user_project.project_members), with: Entities::ProjectMember
+        present paginate(user_project.project_members.includes(:user)), with: Entities::ProjectMember
       end
 
       # Get a single project member

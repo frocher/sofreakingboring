@@ -28,4 +28,15 @@ Olb::Application.configure do
   config.assets.debug = true
 
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
+
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.alert = false
+    Bullet.bullet_logger = true
+    Bullet.console = true
+    Bullet.growl = false
+    Bullet.rails_logger = true
+    Bullet.add_footer = false
+    Bullet.stacktrace_includes = [ 'your_gem', 'your_middleware' ]
+  end
 end
