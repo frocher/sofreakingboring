@@ -2,6 +2,7 @@
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     padding-left: 50px;
     text-shadow: 1px 2px 4px rgba(0,0,0,0.7);
+    text-align: center;   
 }
 
 h1.hero {
@@ -10,12 +11,98 @@ h1.hero {
     color: #fff;
     font-size: 46px;
     letter-spacing: 1px;
-    text-align: center;
 }
 
 .intro-text {
-    text-align: center;   
     font-size: 28px;
+}
+
+.btn-scroll {
+  width: 70px;
+  height: 70px;
+  margin-top: 15px;
+  padding: 7px 16px;
+  border: 2px solid #fff;
+  border-radius: 100%!important;
+  font-size: 40px;
+  color: #fff;
+  background: 0 0;
+  -webkit-transition: background .3s ease-in-out;
+  -moz-transition: background .3s ease-in-out;
+  transition: background .3s ease-in-out;
+}
+
+@-webkit-keyframes pulse {    
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+
+    50% {
+        -webkit-transform: scale(1.2);
+        transform: scale(1.2);
+    }
+
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+@-moz-keyframes pulse {    
+    0% {
+        -moz-transform: scale(1);
+        transform: scale(1);
+    }
+
+    50% {
+        -moz-transform: scale(1.2);
+        transform: scale(1.2);
+    }
+
+    100% {
+        -moz-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+.btn-try {
+    border: 1px solid #72afd2;
+    color: #72afd2;
+    background-color: transparent;
+}
+
+.btn-try:hover,
+.btn-try:focus {
+    border: 1px solid #72afd2;
+    outline: 0;
+    color: #000;
+    background-color: #72afd2;
+}
+
+.btn-scroll:hover,
+.btn-scroll:focus {
+    outline: 0;
+    color: #fff;
+    background: rgba(255,255,255,.1);
+}
+
+.btn-scroll i.animated {
+    -webkit-transition-property: -webkit-transform;
+    -webkit-transition-duration: 1s;
+    -moz-transition-property: -moz-transform;
+    -moz-transition-duration: 1s;
+}
+
+.btn-scroll:hover i.animated {
+    -webkit-animation-name: pulse;
+    -moz-animation-name: pulse;
+    -webkit-animation-duration: 1.5s;
+    -moz-animation-duration: 1.5s;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-timing-function: linear;
 }
 
 .light {
@@ -75,6 +162,7 @@ h1.hero {
 .github-fork {
     display: none;
 }
+
 
 #login-box {
     opacity: 0.9;
