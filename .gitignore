@@ -4,8 +4,10 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
-# Ignore bundler config.
-/.bundle
+.DS_Store
+.c9
+.secret
+.bundle
 
 # Ignore specific config files
 /config/database.yml
@@ -24,9 +26,3 @@
 
 # Ignore uploaded files
 /public/system
-
-# Ignore cloud9 tmp files
-/.c9
-
-# Ignore secret token file
-/.secret
