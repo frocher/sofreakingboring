@@ -20,10 +20,6 @@ You can use it online here: [www.sofreakingboring.com](https://www.sofreakingbor
 
 Before starting SoFreakingBoring you need to follow these steps:
 
-* copy database.yml.example to database.yml. 
-* copy olb.yml.example to olb.yml.
-* copy puma.rb.example to puma.rb
-* adapt the three files to your environment
 * migrate database with 'rake db:migrate'
 * start in development mode with 'rails s'
 
@@ -34,11 +30,44 @@ The Whenever gem is used for cron jobs. To make it work:
 
 Note: SoFreakingBoring works on Linux and Mac OS X. It has not been tested on Windows and the whenever should not work. If you work on Windows you should consider [Vagrant](https://www.vagrantup.com/).
 
+## Configuration
 
-### Credits
+This project uses the following environment variables.
 
-I want to thank:
+### Mandatory configuration
 
-* [GitLab](https://gitlab.com/): great open source project and more than a source of inspiration.
-* [Handsontable](http://handsontable.com/): minimalist Excel-like data grid editor.
-* [Gratisography](http://gratisography.com/): free high-resolution pictures that can be used on personal and commercial projects.
+| Name  | Default Value | Description  |
+| ----- | ------------- | ------------ |
+| DEVISE_SECRET_KEY | none | You must generate a Devise key
+| RAILS_ENV | development | Don't forget to switch it to production |
+| PORT | 3000 | Puma server port |
+| SECRET_TOKEN | none | Rails needs a secret token |
+
+
+### MySQL Configuration
+
+| Name    | Default Value | Description  |
+| --------|:---------:| -----|
+| DB_HOST | localhost | Database host server |
+| DB_NAME | sofreaking | Database name |
+| DB_PASSWORD | &nbsp; | User password |
+| DB_PORT | 3306 | Database port |
+| DB_USERNAME | root | User name used to log in |
+
+### External services and mail configuration
+
+| Name    | Default Value | Description  |
+| --------|:---------:| -----|
+| GOOGLE_ANALYTICS_KEY | none | if you want to track usage statistics |
+| GRAVATAR_HTTPS | false | Must be true if https is used |
+
+### OAuth Configuration
+
+| Name    | Default Value | Description  |
+| --------|:---------:| -----|
+| FACEBOOK_KEY | none | facebook key for omniauth |
+| FACEBOOK_SECRET | none | facebook secret for omniauth |
+| GITHUB_KEY | none | github key for omniauth |
+| GITHUB_SECRET | none | github secret for omniauth |
+| GOOGLE_KEY | none | google key for omniauth |
+| GOOGLE_SECRET | none | google secret for omniauth |

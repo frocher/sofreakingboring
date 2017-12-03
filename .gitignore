@@ -9,12 +9,7 @@
 .secret
 .bundle
 
-# Ignore specific config files
-/config/database.yml
-/config/olb.yml
-/config/newrelic.yml
-/config/puma.rb
-
+config/application.yml
 
 # Ignore the default SQLite database.
 /db/*.sqlite3

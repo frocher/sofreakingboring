@@ -8,7 +8,7 @@ gem 'sqlite3'
 gem 'mysql2'
 
 # settings
-gem 'settingslogic'
+gem 'figaro'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.2'
@@ -77,7 +77,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 group :test, :development do
   gem 'rspec-rails'
   gem 'capybara'
-  gem 'factory_girl_rails'
   gem 'faker'
   gem 'minitest', '~> 5.3.0'
   gem 'rack-mini-profiler'
@@ -93,9 +92,5 @@ end
 # Use puma as the app server
 gem 'foreman'
 gem 'puma'
-
-# Monitoring
-gem 'newrelic_rpm'
-gem 'newrelic-grape'
 
 gem 'annotate', '~> 2.6.5', group: :development

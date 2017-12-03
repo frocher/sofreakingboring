@@ -149,8 +149,6 @@ Devise.setup do |config|
   # time the user will be asked for credentials again. Default is 30 minutes.
   config.timeout_in = 60.minutes
 
-  # If true, expires auth token on session timeout.
-  config.expire_auth_token_on_timeout = false
 
   # ==> Configuration for :lockable
   # Defines which strategy will be used to lock an account.
@@ -225,27 +223,4 @@ Devise.setup do |config|
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
-
-  # ==> OmniAuth
-
-  unless Olb.config.omniauth.providers.nil?
-    Olb.config.omniauth.providers.each do |provider|
-      provider_arguments = []
-
-      %w[app_id app_secret].each do |argument|
-        provider_arguments << provider[argument] if provider[argument]
-      end
-
-      case provider['args']
-      when Array
-        # An Array from the configuration will be expanded.
-        provider_arguments.concat provider['args']
-      when Hash
-        # A Hash from the configuration will be passed as is.
-        provider_arguments << provider['args']
-      end
-
-      config.omniauth provider['name'].to_sym, *provider_arguments
-    end
-  end
 end

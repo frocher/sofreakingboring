@@ -20,23 +20,16 @@ module ApplicationHelper
   def gravatar_icon(user_email = '', size = nil)
     size = 120 if size.nil? || size <= 0
 
-    if !Olb.config.gravatar.enabled || user_email.blank?
-      URI.join(request.url, '/assets/no_avatar.png')
-    else
-      gravatar_url = olb_config.https ? Olb.config.gravatar.ssl_url : Olb.config.gravatar.plain_url
-      user_email.strip!
-      sprintf gravatar_url, hash: Digest::MD5.hexdigest(user_email.downcase), size: size
-    end
+    plain_url = 'http://www.gravatar.com/avatar/%{hash}?s=%{size}&d=identicon'
+    ssl_url = 'https://secure.gravatar.com/avatar/%{hash}?s=%{size}&d=identicon'
+    gravatar_url = ENV.fetch("GRAVATAR_HTTPS", false) ? ssl_url : plain_url
+    user_email.strip!
+    sprintf gravatar_url, hash: Digest::MD5.hexdigest(user_email.downcase), size: size
   end
 
   def randomized_background_image
     images = ["/assets/intro-bug.jpg", "/assets/intro-mantis.jpg", "/assets/intro-town.jpg"]
     images[rand(images.size)]
-  end
-
-  # shortcut for olb config
-  def olb_config
-    Olb.config.olb
   end
 
   def date_only(datetime)
@@ -68,5 +61,5 @@ module ApplicationHelper
 
     [namespace, controller.controller_name, controller.action_name].compact.join(":")
   end
-  
+
 end

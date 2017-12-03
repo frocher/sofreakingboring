@@ -15,7 +15,7 @@
 //= require jquery.easing.min
 //= require mousetrap
 //= require bootstrap
-//= require select2
+//= require select2-full
 //= require admin_lte
 //= require jquery.flip
 //= require handsontable.full
@@ -61,4 +61,3 @@
 //= require views/projects
 //= require views/tasks
 //= require views/users
-
