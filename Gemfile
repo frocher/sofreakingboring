@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.0'
+gem 'rails', '4.2.10'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
@@ -63,7 +63,7 @@ gem 'whenever', :require => false
 # xslsx exports
 gem 'axlsx_rails'
 
-# Keyboard shortcuts 
+# Keyboard shortcuts
 gem 'mousetrap-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -91,6 +91,7 @@ group :test do
 end
 
 # Use puma as the app server
+gem 'foreman'
 gem 'puma'
 
 # Monitoring
@@ -98,4 +99,3 @@ gem 'newrelic_rpm'
 gem 'newrelic-grape'
 
 gem 'annotate', '~> 2.6.5', group: :development
-
