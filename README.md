@@ -1,6 +1,3 @@
-[![Build Status](https://travis-ci.org/frocher/sofreakingboring.svg?branch=master)](https://travis-ci.org/frocher/sofreakingboring)
-[![Code Climate](https://codeclimate.com/github/frocher/sofreakingboring/badges/gpa.svg)](https://codeclimate.com/github/frocher/sofreakingboring)
-
 ## SoFreakingBoring
 
 ### What is SoFreakingBoring ?
@@ -8,8 +5,6 @@
 SoFreakingBoring is a free and simple project management and time tracking application. It allows you to easily create your own projects and tasks, invite people and start working together.
 
 ![Project Dashboard](https://cloud.githubusercontent.com/assets/7987747/4908740/147eacae-646d-11e4-9971-9ebe095588fe.png)
-
-You can use it online here: [www.sofreakingboring.com](https://www.sofreakingboring.com/).
 
 ### Requirements
 
