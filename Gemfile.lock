@@ -89,7 +89,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
-    crass (1.0.3)
+    crass (1.0.4)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     devise (4.3.0)
@@ -135,7 +135,7 @@ GEM
     hashie (3.5.6)
     hike (1.2.3)
     htmlentities (4.3.4)
-    i18n (0.9.1)
+    i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     jquery-rails (4.3.1)
@@ -156,7 +156,7 @@ GEM
       activerecord
       kaminari-core (= 1.1.1)
     kaminari-core (1.1.1)
-    loofah (2.1.1)
+    loofah (2.2.2)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.0)
@@ -171,14 +171,14 @@ GEM
     momentjs-rails (2.17.1)
       railties (>= 3.1)
     mousetrap-rails (1.4.6)
-    multi_json (1.12.2)
+    multi_json (1.13.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
     mysql2 (0.4.10)
     mysql2 (0.4.10-x86-mingw32)
-    nokogiri (1.8.1)
+    nokogiri (1.8.3)
       mini_portile2 (~> 2.3.0)
-    nokogiri (1.8.1-x86-mingw32)
+    nokogiri (1.8.3-x86-mingw32)
       mini_portile2 (~> 2.3.0)
     numerizer (0.2.0)
     oauth2 (1.4.0)
@@ -219,7 +219,7 @@ GEM
     puma (3.11.0)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
-    rack (1.6.8)
+    rack (1.6.10)
     rack-accept (0.4.5)
       rack (>= 0.4)
     rack-mini-profiler (0.10.7)
@@ -241,12 +241,12 @@ GEM
       sprockets-rails
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
-    rails-dom-testing (1.0.8)
-      activesupport (>= 4.2.0.beta, < 5.0)
+    rails-dom-testing (1.0.9)
+      activesupport (>= 4.2.0, < 5.0)
       nokogiri (~> 1.6)
       rails-deprecated_sanitizer (>= 1.0.1)
-    rails-html-sanitizer (1.0.3)
-      loofah (~> 2.0)
+    rails-html-sanitizer (1.0.4)
+      loofah (~> 2.2, >= 2.2.2)
     railties (4.2.10)
       actionpack (= 4.2.10)
       activesupport (= 4.2.10)
@@ -294,7 +294,7 @@ GEM
     slim (3.0.9)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 1.3.3, < 2.1)
-    sprockets (2.12.4)
+    sprockets (2.12.5)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
@@ -310,7 +310,7 @@ GEM
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (1.4.1)
-    tzinfo (1.2.4)
+    tzinfo (1.2.5)
       thread_safe (~> 0.1)
     tzinfo-data (1.2017.3)
       tzinfo (>= 1.0.0)
@@ -371,7 +371,7 @@ DEPENDENCIES
   rack-mini-profiler
   rails (= 4.2.10)
   rspec-rails
-  sass-rails (~> 4.0.2)
+  sass-rails (~> 4.0.5)
   select2-rails
   shoulda-matchers
   simplecov
@@ -384,4 +384,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.13.6
+   1.16.1
