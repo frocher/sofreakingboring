@@ -67,7 +67,7 @@ gem 'axlsx_rails'
 gem 'mousetrap-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'grape', '~> 0.10.1'
+gem 'grape', '~> 1.1.0'
 gem 'grape-entity', '~> 0.4.4'
 gem 'gon'
 
