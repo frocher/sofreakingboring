@@ -24,7 +24,7 @@ gem 'momentjs-rails'
 gem 'bootstrap-daterangepicker-rails'
 
 # Auth
-gem 'devise'
+gem 'devise', '>= 4.7.1'
 gem 'six'
 gem 'omniauth'
 gem 'omniauth-facebook'
